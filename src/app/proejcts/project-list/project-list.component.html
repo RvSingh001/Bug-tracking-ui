@@ -1,0 +1,71 @@
+<div class="container">
+    <mat-toolbar>
+        <span class="fill-remaining-space"></span>
+        <span>Project Dashboard</span>
+        <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+</div>
+<div class="search-div">
+    <button *ngIf="isAdmin()" mat-raised-button (click)="onCreate()">
+        <mat-icon>add</mat-icon>Create
+    </button>
+    <mat-form-field class="search-form-field" floatLabel="never">
+        <input matInput [(ngModel)]="searchKey" placeholder="Filter" autocomplete="off" (keyup)="applyFilter()">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <button class="buttonpadding" mat-raised-button [routerLink]="'/users'" *ngIf="isAdmin()">
+        User Dashboard
+    </button>
+</div>
+<div class="mat-elevation-z8">
+    <mat-table [dataSource]="projects" matSort (matSortChange)="sortData($event)">
+        <ng-container matColumnDef="ProjectName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Project Name</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.projectName | slice:0:21}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Status</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.status | titlecase | slice:0:21}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Type">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Type</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.type}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="createdAt">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Creation Time</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.createdAt | date: 'short'}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef class="bold-font">Actions</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <button mat-icon-button (click)="onEdit(row)" *ngIf="isAdmin()">
+                    <mat-icon matTooltip="Edit">launch</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="onDelete(row)" *ngIf="isAdmin()">
+                    <mat-icon matTooltip="Delete">delete_outline</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="showBug(row)">
+                    <mat-icon matTooltip="Bug List">bug_report</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="loading">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                Loading data...
+            </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="noData">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                No data.
+            </mat-footer-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':isLoading}"></mat-footer-row>
+        <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(isLoading && projects.data.length==0)}">
+        </mat-footer-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+</div>

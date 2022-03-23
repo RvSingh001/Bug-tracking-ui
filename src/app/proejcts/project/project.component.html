@@ -1,0 +1,60 @@
+<div>
+    <mat-toolbar>
+        <span>{{this.newProjectForm.value.projectId?"Modify Project":"New Project"}}</span>
+        <span class="fill-remaining-space"></span>
+        <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+            <mat-icon>clear</mat-icon>
+        </button>
+    </mat-toolbar>
+</div>
+<div class="container">
+    <form [formGroup]="newProjectForm" class="normal-form">
+        <mat-grid-list cols="2" rowHeight="300px">
+            <mat-grid-tile>
+                <div class="controles-container">
+                    <mat-form-field>
+                        <input formControlName="projectName" pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput placeholder=" Title of
+                            Project*">
+                        <mat-error *ngIf="newProjectForm.controls.projectName.errors?.['required']">
+                            Title is Required!
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input formControlName="description" pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput placeholder="Description of Project*">
+                        <mat-error *ngIf="newProjectForm.controls.description.errors?.['required']">
+                            Description is Required!
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="controles-container">
+                    <mat-form-field>
+                        <mat-select formControlName="status" placeholder="Status of Project*">
+                            <ng-container *ngFor="let status of projectStatus">
+                                <mat-option value="{{status}}">{{status}}</mat-option>
+                            </ng-container>
+                        </mat-select>
+                        <mat-error *ngIf="newProjectForm.controls.status.errors?.['required']">
+                            Status is Required!
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select formControlName="type" placeholder="Type of Project*">
+                            <ng-container *ngFor="let type of projectTypes">
+                                <mat-option value="{{type}}">{{type}}</mat-option>
+                            </ng-container>
+                        </mat-select>
+                        <mat-error *ngIf="newProjectForm.controls.type.errors?.['required']">
+                            Type is Required!
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="button-row">
+                        <button mat-raised-button color="primary" type="button" [disabled]="newProjectForm.invalid" (click)="onSubmit()">Submit</button>
+                        <button mat-raised-button color="warn" type="button" (click)="onClear()">Clear</button>
+                    </div>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </form>
+</div>

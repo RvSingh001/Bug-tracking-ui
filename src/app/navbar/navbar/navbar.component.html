@@ -1,0 +1,10 @@
+<p>
+    <mat-toolbar>
+        <span [routerLink]="'/projects'" style="cursor: pointer;">Bug Tracking System</span>
+        <span class="fill-remaining-space"></span>
+        <div *ngIf="isLoggedIn">
+            <!-- <button mat-raised-button color="warn" (click)="logout()">Logout</button> -->
+            <button mat-raised-button color="warn" matTooltip="Tap here to logout" (click)="logout()">Logout</button>
+        </div>
+    </mat-toolbar>
+</p>

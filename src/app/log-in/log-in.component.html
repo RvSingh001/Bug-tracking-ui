@@ -1,0 +1,33 @@
+<div class="login-page" fxLayoutAlign="center start">
+  <div fxLayout="column" fxLayoutAlign="center center" class="login-page-dailog">
+    <div>
+      <h2>BUG TRACKER</h2>
+    </div>
+    <form [formGroup]="loginForm">
+      <div>
+        <mat-form-field appearance="standard" style="width: 70%;">
+          <mat-label style="color: black;">User Name</mat-label><br>
+          <input matInput formControlName="email" required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="standard" style="width: 70%;">
+          <mat-label style="color: black;">Password</mat-label><br>
+          <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+        <div *ngIf = "loading">
+          <p>Loading...</p>
+        </div>
+      </div>
+      <button mat-stroked-button color="accent" class="btn-block" [disabled]="!loginForm.valid" (click)=login()>Log
+        in</button>
+    </form>
+  </div>
+  <div>
+
+  </div>
+</div>
