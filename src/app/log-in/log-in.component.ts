@@ -43,6 +43,7 @@ export class LogInComponent implements OnInit {
             this.loginResponse.UserEmail = response.headers.valueOf().headers.get("useremail")[0];
             this.loginResponse.UserRole = response.headers.valueOf().headers.get("userrole")[0];
             this.loginResponse.token = response.headers.valueOf().headers.get("authorization")[0];
+            this.loginResponse.UserName=response.headers.valueOf().headers.get("username")[0];
             localStorage.setItem('dataSource', JSON.stringify(this.loginResponse));
             console.log(this.loginResponse);
             this.loginService.onDataReceived(true);

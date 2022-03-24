@@ -29,6 +29,8 @@ export class ProjectListComponent implements OnInit {
   userRole: string| undefined;
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   searchKey: string = '';
+  name: string="Rajveer";
+  
 
   constructor(private projectService: HttpService,
     private dailog: MatDialog,
@@ -39,12 +41,14 @@ export class ProjectListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
      this.userRole = this.authservice.getRoleFromLocalStrorage();
     this.projectService.getAllProjects().subscribe(data => {
       this.projects = new MatTableDataSource(data);
       this.isLoading = true;
       this.projects.paginator = this.paginator;
     })
+    this.name=this.authservice.getUserNameFromLocalStorage();
     console.log(this.projects);
   }
 

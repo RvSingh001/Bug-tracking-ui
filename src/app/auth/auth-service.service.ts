@@ -34,6 +34,12 @@ export class AuthServiceService {
     return localResponse;
   }
 
+  getUserNameFromLocalStorage(): string{
+    let user = localStorage.getItem('dataSource');
+    let localResponse: UserLocalStorage = JSON.parse(user || '{}');
+    return localResponse.UserName;
+  }
+
   getRoleFromLocalStrorage(): string {
     let user = localStorage.getItem('dataSource');
     let localResponse: UserLocalStorage = JSON.parse(user || '{}');
