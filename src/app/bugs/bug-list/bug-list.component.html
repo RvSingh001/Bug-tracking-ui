@@ -1,7 +1,7 @@
 <div class="container">
-    <mat-toolbar>
+    <mat-toolbar style="margin: auto; padding: auto;  " class="title-toolbar">
         <span class="fill-remaining-space"></span>
-        <span>Bug Dashboard</span>
+        <span style="color: whitesmoke;">Bug Dashboard</span>
         <span class="fill-remaining-space"></span>
     </mat-toolbar>
 </div>
@@ -15,6 +15,9 @@
             <mat-icon>close</mat-icon>
         </button>
     </mat-form-field>
+    <button class="buttonpadding" mat-raised-button [routerLink]="'/projects'" style="margin: 5px;">
+        Projects Dashboard
+    </button>
     
 </div>
 <div class="mat-elevation-z8">
