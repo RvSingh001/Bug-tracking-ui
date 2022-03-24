@@ -128,8 +128,9 @@ export class UserListComponent implements OnInit {
     }
   }
   onActive(event: any, param: User) {
-    // console.log(event);
+    console.log(event);
     if (param.role === 'ADMIN') {
+      this.notificationService.warn(':: Admin are not deactived');
       return;
     }
     console.log('In ProjectListComponent onActive');

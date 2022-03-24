@@ -1,5 +1,5 @@
 <div class="container">
-    <mat-toolbar style="margin: auto; padding: auto;  " class="title-toolbar" color="#FFFFFF">
+    <mat-toolbar style="margin: auto; padding: auto;  " class="title-toolbar">
         <span class="fill-remaining-space"></span>
         <span style="color: whitesmoke;">Project Dashboard</span>
         <span class="fill-remaining-space"></span>
@@ -10,7 +10,7 @@
         <mat-icon>add</mat-icon>Create
     </button>
     <mat-form-field class="search-form-field" floatLabel="never">
-        <input matInput [(ngModel)]="searchKey" placeholder="Filter" autocomplete="off" (keyup)="applyFilter()">
+        <input matInput [(ngModel)]="searchKey" placeholder="Search project in list" autocomplete="off" (keyup)="applyFilter()">
         <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
             <mat-icon>close</mat-icon>
         </button>

@@ -10,7 +10,7 @@
         <mat-icon>add</mat-icon>Create 
     </button>
     <mat-form-field class="search-form-field" floatLabel="never">
-        <input matInput [(ngModel)]="searchKey" placeholder="Filter" autocomplete="off" (keyup)="applyFilter()">
+        <input matInput [(ngModel)]="searchKey" placeholder="Search user in list" autocomplete="off" (keyup)="applyFilter()">
         <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
             <mat-icon>close</mat-icon>
         </button>
@@ -38,7 +38,7 @@
         <ng-container matColumnDef="Active">
             <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Active</mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <mat-slide-toggle [disabled]="isAdmin(element.role)" [ngModel]="element.active" (change)="onActive($event,element)"></mat-slide-toggle>
+                <mat-slide-toggle [ngModel]="element.active" (change)="onActive($event,element)"></mat-slide-toggle>
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="loading">
