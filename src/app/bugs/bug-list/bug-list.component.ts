@@ -44,8 +44,6 @@ export class BugListComponent implements OnInit {
     this.user = this.authService.getUserFromLocalStorage();
     this.userRole=this.authService.getRoleFromLocalStrorage();
     this.routeSub = this.route.params.subscribe(params => {
-     // console.log(params) //log the entire params object
-     // console.log(params['id']) //log the value of id
       this.projectId = params['id'];
       this.bugService.getAllByProject(this.projectId).subscribe(data => {
         console.log(data);
@@ -57,9 +55,16 @@ export class BugListComponent implements OnInit {
         this.isLoading = true;
         this.bugs.paginator = this.paginator;
       })
+      if ("rvsingh@gmail.com" == this.authService.getUserFromLocalStorage().UserEmail) {
+        this.name = this.authService.getUserNameFromLocalStorage();
+        this.userRole = "Super" + " " + this.userRole
+  
+      } else {
+        this.name = this.authService.getUserNameFromLocalStorage();
+      }
       console.log(this.bugs);
     });
-    this.name=this.authService.getUserNameFromLocalStorage();
+    
   }
   sortData(sort: Sort) {
     //  console.log('In BugListComponent SortData')

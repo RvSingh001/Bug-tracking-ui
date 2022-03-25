@@ -27,8 +27,8 @@ export class UserListComponent implements OnInit {
   searchKey: string = '';
   isToggleChecked: boolean | undefined;
   userRole: string | undefined;
-  name: string| undefined
-  
+  name: string | undefined
+
   constructor(
     private userService: UserService,
     private dailog: MatDialog,
@@ -49,10 +49,16 @@ export class UserListComponent implements OnInit {
       this.isLoading = true;
       this.users.paginator = this.paginator;
     });
-    this.name=this.authservice.getUserNameFromLocalStorage();
+    if ("rvsingh@gmail.com" == this.authservice.getUserFromLocalStorage().UserEmail) {
+      this.name = this.authservice.getUserNameFromLocalStorage();
+      this.userRole = "Super" + " " + this.userRole
+
+    } else {
+      this.name = this.authservice.getUserNameFromLocalStorage();
+    }
     console.log(this.users);
   }
-  
+
   sortData(sort: Sort) {
     const data = this.users.data.slice();
     if (!sort.active || sort.direction === '') {
@@ -131,26 +137,18 @@ export class UserListComponent implements OnInit {
   }
   onActive(event: any, param: User) {
     console.log(event);
-    
-    if(param.email==this.authservice.getUserFromLocalStorage().UserEmail || "rvsingh@gmail.com"==param.email)
-    {
-      if( "rvsingh@gmail.com"==param.email)
-      {
-        this.notificationService.warn(":: Root admin not deactivated");
+    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail || "rvsingh@gmail.com" == param.email) {
+      if ("rvsingh@gmail.com" == param.email) {
+        this.notificationService.warn(":: Super admin not deactivated");
         this.reload()
         return;
       }
-      else{
+      else {
         this.notificationService.warn(":: Current admin not deactivated");
         this.reload()
         return;
       }
-      
-     
-
     }
-    
-    
     console.log('In ProjectListComponent onActive');
     console.log(param);
     let value = param.active;
@@ -178,7 +176,8 @@ export class UserListComponent implements OnInit {
     });
   }
   isAdmin(userRole: string): boolean {
-    return this.authservice.isAdmin(userRole || '{}');
+    //return this.authservice.isAdmin(userRole || '{}');
+    return false
   }
 }
 

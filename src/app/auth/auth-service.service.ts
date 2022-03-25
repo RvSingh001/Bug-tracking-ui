@@ -54,4 +54,12 @@ export class AuthServiceService {
     return userRole == 'DEVELOPER';
   }
 
+  isQA(userRole: string) {
+    return userRole == 'QA';
+  }
+
+  isSuperAdmin(userRole: string) {
+    return userRole == 'Super ADMIN';
+  }
+
 }
