@@ -132,12 +132,24 @@ export class UserListComponent implements OnInit {
   onActive(event: any, param: User) {
     console.log(event);
     
-    if(param.email==this.authservice.getUserFromLocalStorage().UserEmail)
+    if(param.email==this.authservice.getUserFromLocalStorage().UserEmail || "rvsingh@gmail.com"==param.email)
     {
-      this.notificationService.warn(":: Current admin not deactivated");
-      this.reload()
-      return;
+      if( "rvsingh@gmail.com"==param.email)
+      {
+        this.notificationService.warn(":: this root admin not deactivated");
+        this.reload()
+        return;
+      }
+      else{
+        this.notificationService.warn(":: Current admin not deactivated");
+        this.reload()
+        return;
+      }
+      
+     
+
     }
+    
     
     console.log('In ProjectListComponent onActive');
     console.log(param);
