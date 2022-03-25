@@ -62,4 +62,13 @@ export class AuthServiceService {
     return userRole == 'Super ADMIN';
   }
 
+  getSuperAdmin()
+  {
+    return "Super ADMIN"
+  }
+  getSuperAdminEmail()
+  {
+    return "rvsingh@gmail.com"
+  }
+
 }

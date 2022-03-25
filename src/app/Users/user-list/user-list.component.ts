@@ -49,9 +49,9 @@ export class UserListComponent implements OnInit {
       this.isLoading = true;
       this.users.paginator = this.paginator;
     });
-    if ("rvsingh@gmail.com" == this.authservice.getUserFromLocalStorage().UserEmail) {
+    if (this.authservice.getSuperAdminEmail()== this.authservice.getUserFromLocalStorage().UserEmail) {
       this.name = this.authservice.getUserNameFromLocalStorage();
-      this.userRole = "Super" + " " + this.userRole
+      this.userRole = this.authservice.getSuperAdmin()
 
     } else {
       this.name = this.authservice.getUserNameFromLocalStorage();
@@ -137,8 +137,8 @@ export class UserListComponent implements OnInit {
   }
   onActive(event: any, param: User) {
     console.log(event);
-    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail || "rvsingh@gmail.com" == param.email) {
-      if ("rvsingh@gmail.com" == param.email) {
+    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail || this.authservice.getSuperAdminEmail() == param.email) {
+      if (this.authservice.getSuperAdminEmail() == param.email) {
         this.notificationService.warn(":: Super admin not deactivated");
         this.reload()
         return;

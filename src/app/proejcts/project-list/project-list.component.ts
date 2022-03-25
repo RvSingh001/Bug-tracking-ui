@@ -48,10 +48,10 @@ export class ProjectListComponent implements OnInit {
       this.isLoading = true;
       this.projects.paginator = this.paginator;
     })
-    if("rvsingh@gmail.com"==this.authservice.getUserFromLocalStorage().UserEmail)
+    if(this.authservice.getSuperAdminEmail()==this.authservice.getUserFromLocalStorage().UserEmail)
     {
     this.name=this.authservice.getUserNameFromLocalStorage();
-    this.userRole="Super"+" "+this.userRole;
+    this.userRole=this.authservice.getSuperAdmin()
     }else
     {
       this.name=this.authservice.getUserNameFromLocalStorage();

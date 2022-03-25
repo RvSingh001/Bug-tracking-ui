@@ -55,9 +55,9 @@ export class BugListComponent implements OnInit {
         this.isLoading = true;
         this.bugs.paginator = this.paginator;
       })
-      if ("rvsingh@gmail.com" == this.authService.getUserFromLocalStorage().UserEmail) {
+      if (this.authService.getSuperAdminEmail() == this.authService.getUserFromLocalStorage().UserEmail) {
         this.name = this.authService.getUserNameFromLocalStorage();
-        this.userRole = "Super" + " " + this.userRole
+        this.userRole = this.authService.getSuperAdmin()
   
       } else {
         this.name = this.authService.getUserNameFromLocalStorage();
