@@ -29,6 +29,7 @@ export class BugListComponent implements OnInit {
   private routeSub: Subscription | undefined;
   user: UserLocalStorage | undefined
   name: string| undefined
+  userRole: string| undefined
 
   constructor(private bugService: BugService,
     private dailog: MatDialog,
@@ -41,6 +42,7 @@ export class BugListComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getUserFromLocalStorage();
+    this.userRole=this.authService.getRoleFromLocalStrorage();
     this.routeSub = this.route.params.subscribe(params => {
      // console.log(params) //log the entire params object
      // console.log(params['id']) //log the value of id
