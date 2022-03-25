@@ -18,6 +18,9 @@
     <button class="buttonpadding" mat-raised-button [routerLink]="'/projects'" style="margin: 5px;">
         Projects Dashboard
     </button>
+    <span class="fill-remaining-space"></span>
+   <span style="color: white; margin-left: 5px;">Welcome, {{name}}</span>
+   <span class="fill-remaining-space"></span>
 </div>
 <div class="mat-elevation-z8">
     <mat-table [dataSource]="users" matSort (matSortChange)="sortData($event)">

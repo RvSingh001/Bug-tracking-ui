@@ -27,6 +27,8 @@ export class UserListComponent implements OnInit {
   searchKey: string = '';
   isToggleChecked: boolean | undefined;
   userRole: string | undefined;
+  name: string| undefined
+  
   constructor(
     private userService: UserService,
     private dailog: MatDialog,
@@ -47,7 +49,7 @@ export class UserListComponent implements OnInit {
       this.isLoading = true;
       this.users.paginator = this.paginator;
     });
-
+    this.name=this.authservice.getUserNameFromLocalStorage();
     console.log(this.users);
   }
   
@@ -129,10 +131,14 @@ export class UserListComponent implements OnInit {
   }
   onActive(event: any, param: User) {
     console.log(event);
-    if (param.role === 'Root_ADMIN') {
-      this.notificationService.warn(':: Admins are not deactived');
+    
+    if(param.email==this.authservice.getUserFromLocalStorage().UserEmail)
+    {
+      this.notificationService.warn(":: Current admin not deactivated");
+      this.reload()
       return;
     }
+    
     console.log('In ProjectListComponent onActive');
     console.log(param);
     let value = param.active;

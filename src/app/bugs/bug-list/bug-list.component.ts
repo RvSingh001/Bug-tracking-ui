@@ -28,6 +28,7 @@ export class BugListComponent implements OnInit {
   searchKey: string = '';
   private routeSub: Subscription | undefined;
   user: UserLocalStorage | undefined
+  name: string| undefined
 
   constructor(private bugService: BugService,
     private dailog: MatDialog,
@@ -56,7 +57,7 @@ export class BugListComponent implements OnInit {
       })
       console.log(this.bugs);
     });
-
+    this.name=this.authService.getUserNameFromLocalStorage();
   }
   sortData(sort: Sort) {
     //  console.log('In BugListComponent SortData')
