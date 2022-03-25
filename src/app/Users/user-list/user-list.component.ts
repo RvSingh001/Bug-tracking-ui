@@ -136,7 +136,7 @@ export class UserListComponent implements OnInit {
     {
       if( "rvsingh@gmail.com"==param.email)
       {
-        this.notificationService.warn(":: this root admin not deactivated");
+        this.notificationService.warn(":: Root admin not deactivated");
         this.reload()
         return;
       }
