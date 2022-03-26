@@ -44,6 +44,23 @@
                 <mat-slide-toggle [disabled]="isAdmin(element.role)" [ngModel]="element.active" (change)="onActive($event,element)"></mat-slide-toggle>
             </mat-cell>
         </ng-container>
+
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef class="bold-font">Actions</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                
+                <button mat-icon-button (click)="onEdit(row)"> 
+                    <mat-icon matTooltip="Edit">launch</mat-icon>
+                </button>
+
+                <button mat-icon-button color="warn" (click)="onDelete(row)">
+                    <mat-icon matTooltip="Delete">delete_outline</mat-icon>
+                </button>
+               
+            </mat-cell>
+        </ng-container>
+
+
         <ng-container matColumnDef="loading">
             <mat-footer-cell *matFooterCellDef colspan="6">
                 Loading data...

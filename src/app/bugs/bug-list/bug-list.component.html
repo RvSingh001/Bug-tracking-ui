@@ -58,7 +58,7 @@
                 <button mat-icon-button (click)="onEdit(row)">
                     <mat-icon matTooltip="Edit">launch</mat-icon>
                 </button>
-                <button *ngIf = "!isDeveloper()" mat-icon-button color="warn" (click)="onDelete(row)">
+                <button *ngIf = "isQA()" mat-icon-button color="warn" (click)="onDelete(row)">
                     <mat-icon matTooltip="Delete">delete_outline</mat-icon>
                 </button>
             </mat-cell>

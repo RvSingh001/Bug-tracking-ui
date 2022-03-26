@@ -48,15 +48,9 @@ export class ProjectListComponent implements OnInit {
       this.isLoading = true;
       this.projects.paginator = this.paginator;
     })
-    if(this.authservice.getSuperAdminEmail()==this.authservice.getUserFromLocalStorage().UserEmail)
-    {
+    
     this.name=this.authservice.getUserNameFromLocalStorage();
-    this.userRole=this.authservice.getSuperAdmin()
-    }else
-    {
-      this.name=this.authservice.getUserNameFromLocalStorage();
-    }
-   // this.name=this.authservice.getUserNameFromLocalStorage();
+    
     console.log(this.projects);
   }
 
@@ -147,14 +141,9 @@ export class ProjectListComponent implements OnInit {
   }
 
   isAdmin():boolean {
-    if(this.authservice.isSuperAdmin(this.userRole || '{}'))
-    {
-      return true
-    }
-    else
-    {
+    
     return this.authservice.isAdmin(this.userRole || '{}');
-    }
+    
   }
 }
 

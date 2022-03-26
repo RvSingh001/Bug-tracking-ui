@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
+import { NotificationService } from "src/app/proejcts/service/notification-service";
 import { User } from "src/app/shared/user";
 import { environment } from "src/environments/environment";
 
@@ -30,7 +31,7 @@ export class UserService {
     getUsers(): User[] {
         return this.users;
     }
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,private notificationService: NotificationService) {
         console.log('In User Service consturctor');
     }
     getAllUsers(): Observable<User[]> {
@@ -83,6 +84,8 @@ export class UserService {
 
     public initializeFormGroupUser(user?: User) {
         console.log('In httpservice initializeFormGroupUser');
+        
+        
         if (user == undefined || user == null) {
             this.newUserForm.setValue({
                 userId: '',
@@ -97,13 +100,14 @@ export class UserService {
         else {
             console.log('In In httpservice initializeFormGroupUser else block');
             console.log(user);
+            
             this.newUserForm.setValue({
                 userId: user.userId,
                 role: user.role,
                 email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName,
-                password: user.password
+                password: ''
             });
         }
     }

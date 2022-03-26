@@ -29,22 +29,36 @@ export class UserComponent implements OnInit {
   }
 
   onSubmitUser() {
-    console.log('In UserComponent OnSubmit');
+
     if (this.newUserForm.valid) {
-        console.log('In UserComponent OnSubmit if block');
-        console.log(this.newUserForm.value);
+
+      if (!this.newUserForm.value.userId) {
         this.createUser(this.newUserForm.value);
+      }
+      else {
+
+        this.updateUser(this.newUserForm.value);
+      }
     }
   }
-  
+
   createUser(user: User) {
     console.log(`In UserComponent createuser`);
     this.userService.insertUser(user).subscribe(data => {
       this.notificationService.success('::Submitted successfully');
       this.closeDailoguser();
       this.reload();
-    }, error=>{
+    }, error => {
       this.notificationService.warn('Email already exist');
+    });
+  }
+
+  updateUser(user: User) {
+    console.log(`In UserComponet update user`);
+    this.userService.updateUser(user).subscribe(data => {
+      this.closeDailoguser();
+      this.notificationService.success('::Modified successfully');
+      this.reload();
     });
   }
 

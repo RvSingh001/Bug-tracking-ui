@@ -55,13 +55,9 @@ export class BugListComponent implements OnInit {
         this.isLoading = true;
         this.bugs.paginator = this.paginator;
       })
-      if (this.authService.getSuperAdminEmail() == this.authService.getUserFromLocalStorage().UserEmail) {
+     
         this.name = this.authService.getUserNameFromLocalStorage();
-        this.userRole = this.authService.getSuperAdmin()
-  
-      } else {
-        this.name = this.authService.getUserNameFromLocalStorage();
-      }
+        
       console.log(this.bugs);
     });
     
@@ -160,8 +156,12 @@ export class BugListComponent implements OnInit {
     });
   }
 
-  isDeveloper(){
-    return this.user?.UserRole === "DEVELOPER";
+  isQA(): boolean{
+    return this.authService.isQA(this.userRole || '{}')
+  }
+
+  isDeveloper(): boolean{
+    return this.authService.isDev(this.userRole || '{}')
   }
 
 }

@@ -20,7 +20,7 @@ import { AuthServiceService } from 'src/app/auth/auth-service.service';
 export class UserListComponent implements OnInit {
 
   users: MatTableDataSource<any>;
-  displayedColumns: string[] = ['FirstName', 'LastName', 'Role', 'Active'];
+  displayedColumns: string[] = ['FirstName', 'LastName', 'Role', 'Active','action'];
   isLoading: boolean = false;
   sortedData: User[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
@@ -49,13 +49,9 @@ export class UserListComponent implements OnInit {
       this.isLoading = true;
       this.users.paginator = this.paginator;
     });
-    if (this.authservice.getSuperAdminEmail()== this.authservice.getUserFromLocalStorage().UserEmail) {
+    
       this.name = this.authservice.getUserNameFromLocalStorage();
-      this.userRole = this.authservice.getSuperAdmin()
-
-    } else {
-      this.name = this.authservice.getUserNameFromLocalStorage();
-    }
+     
     console.log(this.users);
   }
 
@@ -106,12 +102,17 @@ export class UserListComponent implements OnInit {
   }
 
   onEdit(param: User) {
-    console.log('In ProjectListComponent onEdit');
-    console.log(param);
+    
+    if (this.authservice.superAdmin() == param.role) {
+      this.notificationService.warn(":: Super admin can not be edited");
+      this.reload()
+      return;
+    }
+    
     this.userService.getUserById(param.userId).subscribe((data) => {
-      console.log(data);
+     
+     
       this.userService.initializeFormGroupUser(data);
-      console.log(this.userService.newUserForm.value);
       const dialogConfig = new MatDialogConfig();
       dialogConfig.autoFocus = true;
       dialogConfig.width = '60%';
@@ -121,9 +122,20 @@ export class UserListComponent implements OnInit {
     });
   }
   onDelete(param: User) {
-    console.log('In ProjectListComponent onDelete');
-    console.log(param);
-    if (confirm('Are you sure want to delete this project?')) {
+    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail || this.authservice.superAdmin() == param.role) 
+    {
+      if (this.authservice.superAdmin() == param.role) {
+        this.notificationService.warn(":: Super admin can not be deleted");
+        this.reload()
+        return;
+      }
+      else {
+        this.notificationService.warn(":: Current admin can not be deleted");
+        this.reload()
+        return;
+      }
+    }
+    if (confirm('Are you sure want to delete this user?')) {
       this.userService.deleteUser(param.userId).subscribe((response) => {
         if (response.operationStatus === 'SUCCESS') {
           this.notificationService.success('::Deleted sucessfully');
@@ -137,14 +149,15 @@ export class UserListComponent implements OnInit {
   }
   onActive(event: any, param: User) {
     console.log(event);
-    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail || this.authservice.getSuperAdminEmail() == param.email) {
-      if (this.authservice.getSuperAdminEmail() == param.email) {
-        this.notificationService.warn(":: Super admin not deactivated");
+    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail || this.authservice.superAdmin() == param.role) 
+    {
+      if (this.authservice.superAdmin() == param.role) {
+        this.notificationService.warn(":: Super admin can not be deactivated");
         this.reload()
         return;
       }
       else {
-        this.notificationService.warn(":: Current admin not deactivated");
+        this.notificationService.warn(":: Current admin can not be deactivated");
         this.reload()
         return;
       }

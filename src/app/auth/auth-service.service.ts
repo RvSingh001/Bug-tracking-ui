@@ -28,13 +28,13 @@ export class AuthServiceService {
     return localResponse.token
   }
 
-  getUserFromLocalStorage(){
+  getUserFromLocalStorage() {
     let user = localStorage.getItem('dataSource');
     let localResponse: UserLocalStorage = JSON.parse(user || '{}');
     return localResponse;
   }
 
-  getUserNameFromLocalStorage(): string{
+  getUserNameFromLocalStorage(): string {
     let user = localStorage.getItem('dataSource');
     let localResponse: UserLocalStorage = JSON.parse(user || '{}');
     return localResponse.UserName;
@@ -45,9 +45,12 @@ export class AuthServiceService {
     let localResponse: UserLocalStorage = JSON.parse(user || '{}');
     return localResponse.UserRole
   }
-  
+
   isAdmin(userRole: string) {
-    return userRole == 'ADMIN';
+
+    return userRole == 'ADMIN' || userRole == 'SUPER_ADMIN'
+
+
   }
 
   isDev(userRole: string) {
@@ -58,17 +61,8 @@ export class AuthServiceService {
     return userRole == 'QA';
   }
 
-  isSuperAdmin(userRole: string) {
-    return userRole == 'Super ADMIN';
-  }
-
-  getSuperAdmin()
-  {
-    return "Super ADMIN"
-  }
-  getSuperAdminEmail()
-  {
-    return "rvsingh@gmail.com"
+  superAdmin() {
+    return "SUPER_ADMIN"
   }
 
 }
