@@ -85,7 +85,7 @@ export class BugComponent implements OnInit {
   }
 
   updateBug(bug: Bug) {
-    this.notificationService.warn(bug.userId)
+   
     console.log(`In BugComponent update bug`);
     this.bugService.updateBug(bug).subscribe(data => {
       this.closeDailog();

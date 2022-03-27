@@ -44,7 +44,7 @@ export class UserListComponent implements OnInit {
     if (!this.authservice.isAdmin(this.userRole)) {
       this.router.navigateByUrl('');
     }
-    this.userService.getAllUsers().subscribe((data) => {
+    this.userService.getAllUsers(this.userRole).subscribe((data) => {
       this.users = new MatTableDataSource(data);
       this.isLoading = true;
       this.users.paginator = this.paginator;

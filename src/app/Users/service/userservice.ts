@@ -34,8 +34,8 @@ export class UserService {
     constructor(private http: HttpClient,private notificationService: NotificationService) {
         console.log('In User Service consturctor');
     }
-    getAllUsers(): Observable<User[]> {
-        return this.http.get<User[]>(`${environment.baseUrl}users`)
+    getAllUsers(userRole: string): Observable<User[]> {
+        return this.http.get<User[]>(`${environment.baseUrl}users/role/${userRole}`)
             .pipe(catchError(this.handleError));;
     }
 
