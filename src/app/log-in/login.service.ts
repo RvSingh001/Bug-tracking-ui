@@ -46,10 +46,10 @@ export class LoginService {
     let errorMessage = 'Unknown error!';
     if (error.status == 403) {
       // Client-side errors
-      errorMessage = `Bad Credentials`;
+      errorMessage = `Unauthorized user`;
     } else {
       // Server-side errors
-      errorMessage = `Something went worng`;
+      errorMessage = `Server Error`;
     }
     return throwError(errorMessage);
   }

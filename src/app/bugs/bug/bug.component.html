@@ -51,7 +51,7 @@
                     <mat-form-field>
                         <mat-select [disabled] = "isDeveloper()" formControlName="userId" placeholder="Assignee*">
                             <ng-container *ngFor="let user of devUsers">
-                                <mat-option value="{{user.userId}}">{{user.email}}</mat-option>
+                                <mat-option value="{{user.userId}}">{{user.firstName+" "+user.lastName}}</mat-option>
                             </ng-container>
                         </mat-select>
                         <!-- <mat-error>This field is mandatory.</mat-error> -->

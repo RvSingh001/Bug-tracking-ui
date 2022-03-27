@@ -20,7 +20,7 @@ import { AuthServiceService } from 'src/app/auth/auth-service.service';
 export class UserListComponent implements OnInit {
 
   users: MatTableDataSource<any>;
-  displayedColumns: string[] = ['FirstName', 'LastName', 'Role', 'Active','action'];
+  displayedColumns: string[] = ['FirstName', 'LastName','Email','Creation Time' ,'Role', 'Active','action'];
   isLoading: boolean = false;
   sortedData: User[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
@@ -71,6 +71,10 @@ export class UserListComponent implements OnInit {
           return compare(a.role, b.role, isAsc);
         case 'Active':
           return compare(a.active, b.active, isAsc);
+        case 'Email':
+          return compare(a.email, b.email, isAsc);
+        case 'Creation Time':
+          return compare(a.createdAt, b.createdAt, isAsc);
         default:
           return 0;
       }
@@ -191,6 +195,9 @@ export class UserListComponent implements OnInit {
   isAdmin(userRole: string): boolean {
     //return this.authservice.isAdmin(userRole || '{}');
     return false
+  }
+  isSuperAdmin(): boolean{
+    return this.userRole=='SUPER_ADMIN'
   }
 }
 

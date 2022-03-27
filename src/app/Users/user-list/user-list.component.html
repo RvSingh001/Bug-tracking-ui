@@ -33,6 +33,14 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Last Name</mat-header-cell>
             <mat-cell *matCellDef="let element">{{element.lastName}}</mat-cell>
         </ng-container>
+        <ng-container matColumnDef="Email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Email</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.email}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Creation Time">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Creation Time</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.createdAt | date: 'short'}} </mat-cell>
+        </ng-container>
 
         <ng-container matColumnDef="Role">
             <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Role</mat-header-cell>
@@ -53,7 +61,7 @@
                     <mat-icon matTooltip="Edit">launch</mat-icon>
                 </button>
 
-                <button mat-icon-button color="warn" (click)="onDelete(row)">
+                <button *ngIf = "isSuperAdmin()" mat-icon-button color="warn" (click)="onDelete(row)">
                     <mat-icon matTooltip="Delete">delete_outline</mat-icon>
                 </button>
                

@@ -17,7 +17,7 @@ import { BugListComponent } from './bugs/bug-list/bug-list.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { ApplicationGuard } from './auth/application-guard';
 import { JwtInterceptor } from './JwtInterceptor/JwtInterceptor';
-import { NavbarComponent } from './navbar/navbar/navbar.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CommonModule } from '@angular/common';
 

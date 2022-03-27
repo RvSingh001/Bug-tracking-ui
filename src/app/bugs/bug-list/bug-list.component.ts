@@ -20,7 +20,7 @@ import { BugService } from '../service/bug.service';
 export class BugListComponent implements OnInit {
 
   bugs: MatTableDataSource<any>;
-  displayedColumns: string[] = ['Title', 'Description', 'Status', 'createdAt', 'lastModified', 'createdBy', 'actions'];
+  displayedColumns: string[] = ['Title', 'Description', 'Status', 'createdAt', 'lastModified', 'createdBy','Developer', 'actions'];
   isLoading: boolean = false;
   sortedData: Bug[] = [];
   projectId: string = '';
@@ -78,6 +78,12 @@ export class BugListComponent implements OnInit {
           return compare(a.status, b.status, isAsc);
         case 'Priority':
           return compare(a.priority, b.priority, isAsc);
+        case 'createdAt':
+          return compare(a.createdAt, b.createdAt, isAsc);
+        case 'lastModified':
+          return compare(a.lastModified, b.lastModified, isAsc);
+        case 'createdBy':
+          return compare(a.createdBy, b.createdBy, isAsc);
         default:
           return 0;
       }
@@ -147,7 +153,7 @@ export class BugListComponent implements OnInit {
   }
 
   showBug() {
-    console.log('In ProjectLisy showBug');
+    console.log('In ProjectList showBug');
   }
 
   reload() {

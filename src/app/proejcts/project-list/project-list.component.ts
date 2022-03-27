@@ -68,6 +68,8 @@ export class ProjectListComponent implements OnInit {
           return compare(a.status, b.status, isAsc);
         case 'Type':
           return compare(a.type, b.type, isAsc);
+        case 'createdAt':
+            return compare(a.createdAt, b.createdAt, isAsc);
         default:
           return 0;
       }
@@ -130,7 +132,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   showBug(params: Project) {
-    console.log('In ProjectLisy showBug');
+    console.log('In ProjectList showBug');
     this.router.navigateByUrl(`projects/${params.projectId}/bugs`);
   }
 

@@ -58,7 +58,7 @@ export class BugComponent implements OnInit {
         console.log(this.newBugForm.value);
         console.log(this.user?.UserEmail)
         this.newBugForm.patchValue({
-          createdBy: this.user?.UserEmail
+          createdBy: this.user?.UserName+" ("+this.user?.UserRole+")"
         })
         console.log('updated');
         console.log(this.newBugForm.value);
@@ -67,13 +67,16 @@ export class BugComponent implements OnInit {
       else {
         console.log('In BugComponent OnSubmit else block');
         console.log(this.newBugForm.value.bugId);
+        this.newBugForm.patchValue({
+          createdBy: this.user?.UserName+" ("+this.user?.UserRole+")"
+        })
         this.updateBug(this.newBugForm.value);
       }
     }
   }
 
   createBug(bug: Bug) {
-    console.log(`In BugComponent createBug`);
+    
     this.bugService.insertBug(bug).subscribe(data => {
       this.notificationService.success('::Submitted successfully');
       this.closeDailog();
@@ -82,6 +85,7 @@ export class BugComponent implements OnInit {
   }
 
   updateBug(bug: Bug) {
+    this.notificationService.warn(bug.userId)
     console.log(`In BugComponent update bug`);
     this.bugService.updateBug(bug).subscribe(data => {
       this.closeDailog();
