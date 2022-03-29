@@ -16,17 +16,17 @@
         </button>
     </mat-form-field>
     <button class="buttonpadding" mat-raised-button [routerLink]="'/projects'" style="margin: 5px;">
-        Projects Dashboard
+        Project Dashboard
     </button>
     <span class="fill-remaining-space"></span>
-   <span style="color: white; margin-left: 5px;">Welcome, {{name}} ({{userRole}})</span>
-   <span class="fill-remaining-space"></span>
+    <span style="color: white; margin-left: 5px;">Welcome, {{name}} ({{userRole}})</span>
+    <span class="fill-remaining-space"></span>
 </div>
 <div class="mat-elevation-z8">
     <mat-table [dataSource]="bugs" matSort (matSortChange)="sortData($event)">
         <ng-container matColumnDef="Title">
             <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Title</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.title | slice:0:21}}</mat-cell>
+            <mat-cell *matCellDef="let element">{{element.title}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="Status">
             <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Status</mat-header-cell>
@@ -34,36 +34,32 @@
         </ng-container>
         <ng-container matColumnDef="Description">
             <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Description</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.description | slice:0:21}}</mat-cell>
+            <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
         </ng-container>
-    
-        <ng-container matColumnDef="createdBy">
-            <mat-header-cell *matHeaderCellDef  class="bold-font">Owner</mat-header-cell>
+        Priority
+        <ng-container matColumnDef="Priority">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Priority</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.priority}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Owner">
+            <mat-header-cell *matHeaderCellDef class="bold-font">Owner</mat-header-cell>
             <mat-cell *matCellDef="let element">{{element.createdBy}}</mat-cell>
         </ng-container>
-
         <ng-container matColumnDef="Developer">
-            <mat-header-cell *matHeaderCellDef  class="bold-font">Developer</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef class="bold-font">Developer</mat-header-cell>
             <mat-cell *matCellDef="let element">{{element.developer}}</mat-cell>
         </ng-container>
-
-        <ng-container matColumnDef="createdAt">
+        <ng-container matColumnDef="Creation Time">
             <mat-header-cell *matHeaderCellDef class="bold-font">Creation Time</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.createdAt | date: 'short'}}</mat-cell>
+            <mat-cell *matCellDef="let element">{{element.createdAt | date: 'dd/mm/yyyy hh:mm a'}}</mat-cell>
         </ng-container>
-
-        <ng-container matColumnDef="lastModified">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">lastModified</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.updatedAt | date: 'short'}}</mat-cell>
-        </ng-container>
-        
-        <ng-container matColumnDef="actions">
+        <ng-container matColumnDef="Actions">
             <mat-header-cell *matHeaderCellDef class="bold-font">Actions</mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <button mat-icon-button (click)="onEdit(row)">
                     <mat-icon matTooltip="Edit">launch</mat-icon>
                 </button>
-                <button *ngIf = "isQA()" mat-icon-button color="warn" (click)="onDelete(row)">
+                <button *ngIf="!isDeveloper()" mat-icon-button color="warn" (click)="onDelete(row)">
                     <mat-icon matTooltip="Delete">delete_outline</mat-icon>
                 </button>
             </mat-cell>

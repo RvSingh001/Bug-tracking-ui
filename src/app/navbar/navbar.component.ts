@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   isLoggedIn = false;
   loginSubs: Subscription | undefined;
-  constructor(private authService: AuthServiceService, private route: Router, private loginService : LoginService) { }
+  constructor(private authService: AuthServiceService, private route: Router, private loginService: LoginService) { }
   ngOnDestroy(): void {
     this.loginSubs?.unsubscribe();
   }
@@ -26,12 +26,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     })
   }
 
-  logout(){
+  logout() {
     console.log('In navbar logout');
     localStorage.removeItem('dataSource');
     this.route.navigateByUrl('');
     this.loginService.onDataReceived(false);
   }
-
-
 }

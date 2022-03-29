@@ -12,14 +12,16 @@
         <mat-grid-list cols="2" rowHeight="300px">
             <mat-grid-tile>
                 <div class="controles-container">
-                    <mat-form-field >
-                        <input formControlName="title" pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput placeholder="Title of Bug*">
+                    <mat-form-field>
+                        <input formControlName="title" pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput
+                            placeholder="Title of Bug*">
                         <mat-error *ngIf="newBugForm.controls.title.errors?.['required']">
                             Title is Required!
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <input  [disabled] = "isDeveloper()" formControlName="description" pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput placeholder="Description of Bug*">
+                        <input [disabled]="isDeveloper()" formControlName="description"
+                            pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput placeholder="Description of Bug*">
                         <mat-error *ngIf="newBugForm.controls.description.errors?.['required']">
                             Description is Required!
                         </mat-error>
@@ -39,7 +41,8 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <mat-select [disabled] = "isDeveloper()" formControlName="priority" placeholder="Priority of Bug*">
+                        <mat-select [disabled]="isDeveloper()" formControlName="priority"
+                            placeholder="Priority of Bug*">
                             <ng-container *ngFor="let priority of bugPriority">
                                 <mat-option value="{{priority}}">{{priority}}</mat-option>
                             </ng-container>
@@ -49,7 +52,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <mat-select [disabled] = "isDeveloper()" formControlName="userId" placeholder="Assignee*">
+                        <mat-select [disabled]="isDeveloper()" formControlName="userId" placeholder="Assignee*">
                             <ng-container *ngFor="let user of devUsers">
                                 <mat-option value="{{user.userId}}">{{user.firstName+" "+user.lastName}}</mat-option>
                             </ng-container>
@@ -60,7 +63,8 @@
                         </mat-error>
                     </mat-form-field>
                     <div class="button-row">
-                        <button mat-raised-button color="primary" type="button" [disabled]="newBugForm.invalid" (click)="onSubmit()">Submit</button>
+                        <button mat-raised-button color="primary" type="button" [disabled]="newBugForm.invalid"
+                            (click)="onSubmit()">Submit</button>
                         <button mat-raised-button color="warn" type="button" (click)="onClear()">Clear</button>
                     </div>
                 </div>

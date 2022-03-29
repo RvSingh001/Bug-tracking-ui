@@ -5,7 +5,9 @@ import { AuthServiceService } from '../auth/auth-service.service';
 import { environment } from "src/environments/environment";
 
 @Injectable()
+
 export class JwtInterceptor implements HttpInterceptor {
+
     constructor(private authService: AuthServiceService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

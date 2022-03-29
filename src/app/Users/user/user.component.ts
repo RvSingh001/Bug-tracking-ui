@@ -1,42 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { FormGroup } from '@angular/forms';
-
 import { MatDialogRef } from '@angular/material/dialog';
-
 import { User } from "src/app/shared/user";
 import { NotificationService } from '../../proejcts/service/notification-service';
 import { UserService } from '../service/userservice';
+import { UserLocalStorage } from 'src/app/shared/UserLocalStorage';
+import { AuthServiceService } from 'src/app/auth/auth-service.service';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
+
 export class UserComponent implements OnInit {
 
   newUserForm: FormGroup = this.userService.newUserForm;
-  userRole = ['ADMIN', 'DEVELOPER', 'QA'];
+  userRole = ['QA', 'DEVELOPER', 'SUPER_ADMIN'];
+  projectManager = ['QA', 'DEVELOPER'];
+  user: UserLocalStorage | undefined;
 
   constructor(private userService: UserService,
     private router: Router,
     private notificationService: NotificationService,
-    private dailogRef: MatDialogRef<UserComponent>) { }
+    private dailogRef: MatDialogRef<UserComponent>,
+    private authservice: AuthServiceService) { }
 
   ngOnInit(): void {
+    this.user = this.authservice.getUserFromLocalStorage();
+    this.populateUserRole(this.user.UserRole || '{}');
     console.log()
   }
 
   onSubmitUser() {
-
     if (this.newUserForm.valid) {
-
       if (!this.newUserForm.value.userId) {
         this.createUser(this.newUserForm.value);
       }
       else {
-
         this.updateUser(this.newUserForm.value);
       }
     }
@@ -60,6 +62,12 @@ export class UserComponent implements OnInit {
       this.notificationService.success('::Modified successfully');
       this.reload();
     });
+  }
+
+  populateUserRole(userRole: string) {
+    if (userRole === 'ADMIN') {
+      this.userRole = this.projectManager;
+    }
   }
 
   onClearuser() {
@@ -93,5 +101,4 @@ export class UserComponent implements OnInit {
     console.log('In UserComponent onClose');
     this.closeDailoguser();
   }
-
 }

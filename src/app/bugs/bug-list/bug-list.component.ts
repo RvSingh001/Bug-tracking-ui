@@ -20,7 +20,7 @@ import { BugService } from '../service/bug.service';
 export class BugListComponent implements OnInit {
 
   bugs: MatTableDataSource<any>;
-  displayedColumns: string[] = ['Title', 'Description', 'Status', 'createdAt', 'lastModified', 'createdBy','Developer', 'actions'];
+  displayedColumns: string[] = ['Title', 'Description', 'Priority', 'Status', 'Creation Time', 'Owner', 'Developer', 'Actions'];
   isLoading: boolean = false;
   sortedData: Bug[] = [];
   projectId: string = '';
@@ -28,8 +28,8 @@ export class BugListComponent implements OnInit {
   searchKey: string = '';
   private routeSub: Subscription | undefined;
   user: UserLocalStorage | undefined
-  name: string| undefined
-  userRole: string| undefined
+  name: string | undefined
+  userRole: string | undefined
 
   constructor(private bugService: BugService,
     private dailog: MatDialog,
@@ -42,33 +42,29 @@ export class BugListComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getUserFromLocalStorage();
-    this.userRole=this.authService.getRoleFromLocalStrorage();
+    this.userRole = this.authService.getRoleFromLocalStrorage();
     this.routeSub = this.route.params.subscribe(params => {
       this.projectId = params['id'];
       this.bugService.getAllByProject(this.projectId).subscribe(data => {
         console.log(data);
-        if(this.authService.isDev(this.user?.UserRole || '')){
+        if (this.authService.isDev(this.user?.UserRole || '')) {
           console.log('in if condition')
-          data = data.filter((ele:any) => ele.userId === this.user?.UserId)
+          data = data.filter((ele: any) => ele.userId === this.user?.UserId)
         }
         this.bugs = new MatTableDataSource(data);
         this.isLoading = true;
         this.bugs.paginator = this.paginator;
       })
-     
-        this.name = this.authService.getUserNameFromLocalStorage();
-        
+      this.name = this.authService.getUserNameFromLocalStorage();
       console.log(this.bugs);
     });
-    
   }
+
   sortData(sort: Sort) {
-    //  console.log('In BugListComponent SortData')
     const data = this.bugs.data.slice();
     if (!sort.active || sort.direction === '') {
       return;
     }
-    // console.log(sort);
     this.sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
@@ -78,12 +74,12 @@ export class BugListComponent implements OnInit {
           return compare(a.status, b.status, isAsc);
         case 'Priority':
           return compare(a.priority, b.priority, isAsc);
-        case 'createdAt':
+        case 'Creation Time':
           return compare(a.createdAt, b.createdAt, isAsc);
-        case 'lastModified':
-          return compare(a.lastModified, b.lastModified, isAsc);
-        case 'createdBy':
+        case 'Owner':
           return compare(a.createdBy, b.createdBy, isAsc);
+        case 'Developer':
+          return compare(a.developer, b.developer, isAsc);
         default:
           return 0;
       }
@@ -101,7 +97,7 @@ export class BugListComponent implements OnInit {
   }
 
   onCreate() {
-    if(this.isDeveloper()){
+    if (this.isDeveloper()) {
       return;
     }
     this.bugService.initializeFormGroup();
@@ -132,8 +128,9 @@ export class BugListComponent implements OnInit {
       this.dailog.open(BugComponent, dialogConfig);
     });
   }
+
   onDelete(param: Bug) {
-    if(this.isDeveloper()){
+    if (this.isDeveloper()) {
       return;
     }
     console.log('In BugListComponent onDelete');
@@ -162,14 +159,9 @@ export class BugListComponent implements OnInit {
     });
   }
 
-  isQA(): boolean{
-    return this.authService.isQA(this.userRole || '{}')
-  }
-
-  isDeveloper(): boolean{
+  isDeveloper(): boolean {
     return this.authService.isDev(this.userRole || '{}')
   }
-
 }
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {

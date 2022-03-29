@@ -10,11 +10,11 @@ import { UserListComponent } from './Users/user-list/user-list.component';
 const routes: Routes =
   [
     { path: 'projects', component: ProjectListComponent, canActivate: [ApplicationGuard] },
-    { path: 'users', component: UserListComponent, canActivate: [ApplicationGuard]},
-    { path: 'projects/:id/bugs', component: BugListComponent, canActivate: [ApplicationGuard]},
-    {path : '', component : LogInComponent},
-    {path : 'login', component : LogInComponent},
-    {path : '**', component : PageNotFoundComponent},
+    { path: 'users', component: UserListComponent, canActivate: [ApplicationGuard] },
+    { path: 'projects/:id/bugs', component: BugListComponent, canActivate: [ApplicationGuard] },
+    { path: '', component: LogInComponent },
+    { path: 'login', component: LogInComponent },
+    { path: '**', component: PageNotFoundComponent },
   ];
 
 @NgModule({

@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { FormGroup } from '@angular/forms';
-
 import { MatDialogRef } from '@angular/material/dialog';
-
 import { Project } from '../../shared/project';
-import { HttpService } from '../service/http-service';
+import { HttpService } from '../service/project-service';
 import { NotificationService } from '../service/notification-service';
 
 @Component({
@@ -16,7 +12,6 @@ import { NotificationService } from '../service/notification-service';
   styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent implements OnInit {
-
 
   newProjectForm: FormGroup = this.projectService.newProjectForm;
   projectStatus = ['ACTIVE', 'NOT_ACTIVE', 'DEPLOYED', 'CLOSE', 'INPROGRESS'];
@@ -37,20 +32,15 @@ export class ProjectComponent implements OnInit {
     console.log('In ProjectComponent OnSubmit');
     if (this.newProjectForm.valid) {
       if (!this.newProjectForm.value.projectId) {
-      //  console.log('In ProjectComponent OnSubmit if block');
-      //  console.log(this.newProjectForm.value);
         this.createProject(this.newProjectForm.value);
       }
       else {
-      //  console.log('In ProjectComponent OnSubmit else block');
-      //  console.log(this.newProjectForm.value.projectId);
         this.updateProject(this.newProjectForm.value);
       }
     }
   }
 
   createProject(project: Project) {
-  //  console.log(`In ProjectComponent createProject`);
     this.projectService.insertProject(project).subscribe(data => {
       this.notificationService.success('::Submitted successfully');
       this.closeDailog();
@@ -98,5 +88,4 @@ export class ProjectComponent implements OnInit {
     console.log('In ProjectComponent onClose');
     this.closeDailog();
   }
-
 }

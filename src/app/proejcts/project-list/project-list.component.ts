@@ -11,7 +11,7 @@ import { Sort } from '@angular/material/sort';
 import { ProjectComponent } from '../project/project.component';
 import { Project } from 'src/app/shared/project';
 import { NotificationService } from '../service/notification-service';
-import { HttpService } from '../service/http-service';
+import { HttpService } from '../service/project-service';
 import { AuthServiceService } from 'src/app/auth/auth-service.service';
 
 @Component({
@@ -21,16 +21,14 @@ import { AuthServiceService } from 'src/app/auth/auth-service.service';
 })
 export class ProjectListComponent implements OnInit {
 
-
   projects: MatTableDataSource<any>;
   displayedColumns: string[] = ['ProjectName', 'Type', 'Status', 'createdAt', 'actions'];
   isLoading: boolean = false;
   sortedData: Project[] = [];
-  userRole: string| undefined;
+  userRole: string | undefined;
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   searchKey: string = '';
-  name: string="Rajveer";
-  
+  name: string | undefined;
 
   constructor(private projectService: HttpService,
     private dailog: MatDialog,
@@ -41,16 +39,14 @@ export class ProjectListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
-     this.userRole = this.authservice.getRoleFromLocalStrorage();
+
+    this.userRole = this.authservice.getRoleFromLocalStrorage();
     this.projectService.getAllProjects().subscribe(data => {
       this.projects = new MatTableDataSource(data);
       this.isLoading = true;
       this.projects.paginator = this.paginator;
     })
-    
-    this.name=this.authservice.getUserNameFromLocalStorage();
-    
+    this.name = this.authservice.getUserNameFromLocalStorage();
     console.log(this.projects);
   }
 
@@ -69,7 +65,7 @@ export class ProjectListComponent implements OnInit {
         case 'Type':
           return compare(a.type, b.type, isAsc);
         case 'createdAt':
-            return compare(a.createdAt, b.createdAt, isAsc);
+          return compare(a.createdAt, b.createdAt, isAsc);
         default:
           return 0;
       }
@@ -87,8 +83,8 @@ export class ProjectListComponent implements OnInit {
   }
 
   onCreate() {
-    if(!this.isAdmin()){
-    return;
+    if (!this.isAdmin()) {
+      return;
     }
     this.projectService.initializeFormGroup();
     const dialogConfig = new MatDialogConfig();
@@ -114,6 +110,7 @@ export class ProjectListComponent implements OnInit {
       this.dailog.open(ProjectComponent, dialogConfig);
     });
   }
+
   onDelete(param: Project) {
     console.log('In ProjectListComponent onDelete');
     console.log(param);
@@ -142,10 +139,8 @@ export class ProjectListComponent implements OnInit {
     });
   }
 
-  isAdmin():boolean {
-    
+  isAdmin(): boolean {
     return this.authservice.isAdmin(this.userRole || '{}');
-    
   }
 }
 

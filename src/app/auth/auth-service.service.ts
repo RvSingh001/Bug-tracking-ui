@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserLocalStorage } from '../shared/UserLocalStorage';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -47,22 +46,10 @@ export class AuthServiceService {
   }
 
   isAdmin(userRole: string) {
-
     return userRole == 'ADMIN' || userRole == 'SUPER_ADMIN'
-
-
   }
 
   isDev(userRole: string) {
     return userRole == 'DEVELOPER';
   }
-
-  isQA(userRole: string) {
-    return userRole == 'QA' || userRole=='SUPER_ADMIN' || userRole=='ADMIN';
-  }
-
-  superAdmin() {
-    return "SUPER_ADMIN"
-  }
-
 }

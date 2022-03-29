@@ -19,8 +19,8 @@
         User Dashboard
     </button>
     <span class="fill-remaining-space"></span>
-   <span style="color: white; margin-left: 5px;">Welcome, {{name}} ({{userRole}})</span>
-   <span class="fill-remaining-space"></span>
+    <span style="color: white; margin-left: 5px;">Welcome, {{name}} ({{userRole}})</span>
+    <span class="fill-remaining-space"></span>
 </div>
 <div class="mat-elevation-z8">
     <mat-table [dataSource]="projects" matSort (matSortChange)="sortData($event)">
@@ -38,7 +38,7 @@
         </ng-container>
         <ng-container matColumnDef="createdAt">
             <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Creation Time</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.createdAt | date: 'short'}}</mat-cell>
+            <mat-cell *matCellDef="let element">{{element.createdAt | date: 'dd/mm/yyyy hh:mm a'}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef class="bold-font">Actions</mat-header-cell>

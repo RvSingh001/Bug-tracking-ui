@@ -20,7 +20,8 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <input formControlName="description" pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput placeholder="Description of Project*">
+                        <input formControlName="description" pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput
+                            placeholder="Description of Project*">
                         <mat-error *ngIf="newProjectForm.controls.description.errors?.['required']">
                             Description is Required!
                         </mat-error>
@@ -50,7 +51,8 @@
                         </mat-error>
                     </mat-form-field>
                     <div class="button-row">
-                        <button mat-raised-button color="primary" type="button" [disabled]="newProjectForm.invalid" (click)="onSubmit()">Submit</button>
+                        <button mat-raised-button color="primary" type="button" [disabled]="newProjectForm.invalid"
+                            (click)="onSubmit()">Submit</button>
                         <button mat-raised-button color="warn" type="button" (click)="onClear()">Clear</button>
                     </div>
                 </div>

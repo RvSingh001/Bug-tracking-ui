@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import { Router } from '@angular/router';
-
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -11,23 +9,27 @@ import { User } from 'src/app/shared/user';
 import { UserService } from '../service/userservice';
 import { NotificationService } from 'src/app/proejcts/service/notification-service';
 import { AuthServiceService } from 'src/app/auth/auth-service.service';
+import { Project } from 'src/app/shared/project';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
 })
+
 export class UserListComponent implements OnInit {
 
   users: MatTableDataSource<any>;
-  displayedColumns: string[] = ['FirstName', 'LastName','Email','Creation Time' ,'Role', 'Active','action'];
+  displayedColumns: string[] = ['FirstName', 'LastName', 'Email', 'Creation Time', 'Role', 'Active', 'action'];
   isLoading: boolean = false;
   sortedData: User[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   searchKey: string = '';
   isToggleChecked: boolean | undefined;
   userRole: string | undefined;
-  name: string | undefined
+  name: string | undefined;
+  admin = "ADMIN";
+  superAdmin = "SUPER_ADMIN";
 
   constructor(
     private userService: UserService,
@@ -49,9 +51,7 @@ export class UserListComponent implements OnInit {
       this.isLoading = true;
       this.users.paginator = this.paginator;
     });
-    
-      this.name = this.authservice.getUserNameFromLocalStorage();
-     
+    this.name = this.authservice.getUserNameFromLocalStorage();
     console.log(this.users);
   }
 
@@ -95,6 +95,7 @@ export class UserListComponent implements OnInit {
   applyFilter() {
     this.users.filter = this.searchKey.trim().toLowerCase();
   }
+
   onCreateUser() {
     this.userService.initializeFormGroupUser();
     const dialogConfig = new MatDialogConfig();
@@ -105,99 +106,124 @@ export class UserListComponent implements OnInit {
     this.dailog.open(UserComponent, dialogConfig);
   }
 
+  //Edit Function
   onEdit(param: User) {
-    
-    if (this.authservice.superAdmin() == param.role) {
-      this.notificationService.warn(":: Super admin can not be edited");
+
+    if (param.role == this.superAdmin) {
+      this.notificationService.warn(":: Super admin can not be updated");
+      return;
+    }
+
+    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail) {
+
+      this.notificationService.warn(":: Please contact super admin for updation");
+      return;
+    }
+
+    if (param.role != this.admin || this.userRole == this.superAdmin) {
+      
+      this.userService.getUserById(param.userId).subscribe((data) => {
+        this.userService.initializeFormGroupUser(data);
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.autoFocus = true;
+        dialogConfig.width = '60%';
+        dialogConfig.disableClose = true;
+        dialogConfig.backdropClass = 'bdrop';
+        this.dailog.open(UserComponent, dialogConfig);
+      });
       this.reload()
       return;
     }
-    
-    this.userService.getUserById(param.userId).subscribe((data) => {
-     
-     
-      this.userService.initializeFormGroupUser(data);
-      const dialogConfig = new MatDialogConfig();
-      dialogConfig.autoFocus = true;
-      dialogConfig.width = '60%';
-      dialogConfig.disableClose = true;
-      dialogConfig.backdropClass = 'bdrop';
-      this.dailog.open(UserComponent, dialogConfig);
-    });
+    else {
+      this.notificationService.warn(":: Can not edit other admin details")
+      return;
+    }
   }
+
+  // #Delete function
   onDelete(param: User) {
-    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail || this.authservice.superAdmin() == param.role) 
-    {
-      if (this.authservice.superAdmin() == param.role) {
-        this.notificationService.warn(":: Super admin can not be deleted");
-        this.reload()
-        return;
-      }
-      else {
-        this.notificationService.warn(":: Current admin can not be deleted");
-        this.reload()
-        return;
+
+    if (param.role == this.superAdmin) {
+      this.notificationService.warn(":: Super admin can not be deleted");
+      return;
+    }
+
+    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail) {
+      this.notificationService.warn(":: Please contact super admin for account deletion");
+      return;
+
+    }
+    if (param.role != this.admin || this.userRole == this.superAdmin) {
+      if (confirm('Are you sure want to delete this user?')) {
+        this.userService.deleteUser(param.userId).subscribe((response) => {
+          if (response.operationStatus === 'SUCCESS') {
+            this.notificationService.success('::Deleted sucessfully');
+            this.reload();
+          } else {
+            this.notificationService.warn('::Unable to delete');
+            return;
+          }
+        });
       }
     }
-    if (confirm('Are you sure want to delete this user?')) {
-      this.userService.deleteUser(param.userId).subscribe((response) => {
-        if (response.operationStatus === 'SUCCESS') {
-          this.notificationService.success('::Deleted sucessfully');
-          this.reload();
-        } else {
-          this.notificationService.warn('::Unable to delete');
-          this.reload();
-        }
-      });
+    else {
+      this.notificationService.warn(":: Can not delete other admin")
+      return;
     }
   }
+
+  //Active Function
   onActive(event: any, param: User) {
-    console.log(event);
-    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail || this.authservice.superAdmin() == param.role) 
-    {
-      if (this.authservice.superAdmin() == param.role) {
-        this.notificationService.warn(":: Super admin can not be deactivated");
-        this.reload()
-        return;
+
+    if (param.role == this.superAdmin) {
+      this.notificationService.warn(":: Super admin can not be deactivated");
+      this.reload();
+      return;
+    }
+
+    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail) {
+      this.notificationService.warn(":: Please contact super admin for account deactivation");
+      this.reload();
+      return;
+    }
+    if (param.role != this.admin || this.userRole == this.superAdmin) {
+      let value = param.active;
+      let dailogMgs = 'Are you sure want to active this user?';
+      if (value) {
+        dailogMgs = 'Are you sure want to deactive this user?';
       }
-      else {
-        this.notificationService.warn(":: Current admin can not be deactivated");
-        this.reload()
-        return;
+      if (confirm(dailogMgs)) {
+        this.userService.activetedUser(param.userId).subscribe((response) => {
+          if (response.operationStatus === 'SUCCESS') {
+            this.notificationService.success('::Operation succeed');
+            this.reload();
+          } else {
+            this.notificationService.warn(':: Operation failed');
+            this.reload();
+            return;
+          }
+        });
+      } else {
+        event.source.checked = value;
       }
     }
-    console.log('In ProjectListComponent onActive');
-    console.log(param);
-    let value = param.active;
-    let dailogMgs = 'Are you sure want to active this user?';
-    if (value) {
-      dailogMgs = 'Are you sure want to deactive this user?';
+    else {
+      this.notificationService.warn(":: Can not deactivated other admin")
+      this.reload();
+      return;
     }
-    if (confirm(dailogMgs)) {
-      this.userService.activetedUser(param.userId).subscribe((response) => {
-        if (response.operationStatus === 'SUCCESS') {
-          this.notificationService.success('::Operation succeed');
-          this.reload();
-        } else {
-          this.notificationService.warn(':: Operation failed');
-          this.reload();
-        }
-      });
-    } else {
-      event.source.checked = value;
-    }
+
   }
+
   reload() {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/users']);
     });
   }
+
   isAdmin(userRole: string): boolean {
     //return this.authservice.isAdmin(userRole || '{}');
     return false
-  }
-  isSuperAdmin(): boolean{
-    return this.userRole=='SUPER_ADMIN'
   }
 }
 

@@ -8,6 +8,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
+
 export class LoginService {
 
   loginForm: FormGroup = new FormGroup({
@@ -19,26 +20,17 @@ export class LoginService {
 
   onDataReceived = (close: boolean) => this.dataObsevable.next(close);
 
-
-  constructor(private http: HttpClient) {
-    console.log('in login service')
-  }
-
+  constructor(private http: HttpClient) { }
 
   loginUser(user: {
     username: string,
     password: string
   }) {
-    console.log(`in LoginService loginUser`);
-    console.log(user);
     return this.http.post<HttpResponse<any>>(`${environment.baseUrl}users/login`, user, {
-       observe: 'response'
+      observe: 'response'
     })
       .pipe(catchError(this.handleError));
   }
-
-
-
 
   handleError(error: HttpErrorResponse) {
     console.log('In loginService handleError');

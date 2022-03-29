@@ -1,7 +1,7 @@
 <div class="login-page" fxLayoutAlign="center start">
   <div fxLayout="column" fxLayoutAlign="center center" class="login-page-dailog">
     <div>
-      <h2 style="color: white;">BUG TRACKER</h2>
+      <h2 style="color: white;">BUG TRACKING SYSTEM</h2>
     </div>
     <form [formGroup]="loginForm">
       <div>
@@ -19,15 +19,15 @@
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
         </mat-form-field>
-        <div *ngIf = "loading">
+        <div *ngIf="loading">
           <p style="color: white;">Loading...</p>
         </div>
       </div>
-      <button mat-stroked-button style="color: white;" class="buttonpadding" [disabled]="!loginForm.valid" (click)=login()>Log
+      <button mat-stroked-button style="color: white;" class="buttonpadding" [disabled]="!loginForm.valid"
+        (click)=login()>Log
         in</button>
     </form>
   </div>
   <div>
-
   </div>
 </div>

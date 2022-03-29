@@ -9,14 +9,13 @@ import { AuthServiceService } from './auth/auth-service.service';
 })
 export class AppComponent implements OnInit {
   constructor(
-    private authService : AuthServiceService, 
-    private route: Router){
+    private authService: AuthServiceService,
+    private route: Router) {
   }
   ngOnInit(): void {
     let token = this.authService.getTokenFromLocalStrorage();
-    if(!token){
+    if (!token) {
       this.route.navigateByUrl('');
     }
- }
-
+  }
 }

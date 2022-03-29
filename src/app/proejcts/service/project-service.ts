@@ -6,12 +6,12 @@ import { catchError } from "rxjs/operators";
 import { Project } from "src/app/shared/project";
 import { environment } from "src/environments/environment";
 
-
-
 @Injectable({
     providedIn: 'root'
 })
+
 export class HttpService {
+
     projects: Project[] = [];
 
     newProjectForm: FormGroup = new FormGroup({
@@ -28,8 +28,8 @@ export class HttpService {
 
     constructor(private http: HttpClient) {
         this.getAllProjects().subscribe(data => {
-         console.log('in HttpService constructor');
-               console.log(data);
+            console.log('in HttpService constructor');
+            console.log(data);
             this.projects = data;
         });
     }
@@ -82,7 +82,6 @@ export class HttpService {
         window.alert(errorMessage);
         return throwError(errorMessage);
     }
-
 
     initializeFormGroup(project?: Project) {
         console.log('In httpservice initializeFormGroup');

@@ -7,13 +7,12 @@ import { NotificationService } from "src/app/proejcts/service/notification-servi
 import { User } from "src/app/shared/user";
 import { environment } from "src/environments/environment";
 
-
-
 @Injectable({
     providedIn: 'root'
 })
+
 export class UserService {
-    // });   
+      
     getAllDevUser() {
         return this.http.get<User[]>(`${environment.baseUrl}users/dev`)
             .pipe(catchError(this.handleError));;
@@ -31,14 +30,15 @@ export class UserService {
     getUsers(): User[] {
         return this.users;
     }
-    constructor(private http: HttpClient,private notificationService: NotificationService) {
+
+    constructor(private http: HttpClient, private notificationService: NotificationService) {
         console.log('In User Service consturctor');
     }
+
     getAllUsers(userRole: string): Observable<User[]> {
         return this.http.get<User[]>(`${environment.baseUrl}users/role/${userRole}`)
             .pipe(catchError(this.handleError));;
     }
-
 
     getUserById(id: String): Observable<User> {
         console.log(`in HttpService getUserById`);
@@ -47,19 +47,20 @@ export class UserService {
             .pipe(catchError(this.handleError));;
     }
 
-
     insertUser(user: User): Observable<User> {
         console.log(`in HttpService insertUser`);
         console.log(user);
         return this.http.post<User>(`${environment.baseUrl}users/`, user)
             .pipe(catchError(this.handleError));
     }
+
     updateUser(newUser: User): Observable<User> {
         console.log(`in HttpService updateUser`);
         console.log(newUser);
         return this.http.put<User>(`${environment.baseUrl}users/${newUser.userId}`, newUser)
             .pipe(catchError(this.handleError));;
     }
+
     deleteUser(userId: string): Observable<any> {
         console.log(`in HttpService deleteUser`);
         console.log(userId);
@@ -84,8 +85,7 @@ export class UserService {
 
     public initializeFormGroupUser(user?: User) {
         console.log('In httpservice initializeFormGroupUser');
-        
-        
+
         if (user == undefined || user == null) {
             this.newUserForm.setValue({
                 userId: '',
@@ -100,7 +100,6 @@ export class UserService {
         else {
             console.log('In In httpservice initializeFormGroupUser else block');
             console.log(user);
-            
             this.newUserForm.setValue({
                 userId: user.userId,
                 role: user.role,
@@ -111,6 +110,7 @@ export class UserService {
             });
         }
     }
+
     populatePartialFormUser(param: string) {
         console.log('in httpservice populatePartialFormUser');
         this.initializeFormGroupUser();
@@ -124,5 +124,4 @@ export class UserService {
         return this.http.put<any>(`${environment.baseUrl}users/${userId}/active`, null)
             .pipe(catchError(this.handleError));;
     }
-
 }

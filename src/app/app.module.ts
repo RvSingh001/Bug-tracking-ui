@@ -49,11 +49,10 @@ import { CommonModule } from '@angular/common';
     ],
 
   providers: [ApplicationGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true},
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
   //To give Access of ProjectComponent by MatDailog for rendering
   entryComponents: [ProjectComponent, UserComponent, BugComponent],
-  
 })
 export class AppModule { }
