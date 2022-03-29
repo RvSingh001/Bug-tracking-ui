@@ -17,7 +17,7 @@ import { AuthServiceService } from 'src/app/auth/auth-service.service';
 export class UserComponent implements OnInit {
 
   newUserForm: FormGroup = this.userService.newUserForm;
-  userRole = ['QA', 'DEVELOPER', 'SUPER_ADMIN'];
+  userRole = ['QA', 'DEVELOPER', 'ADMIN'];
   projectManager = ['QA', 'DEVELOPER'];
   user: UserLocalStorage | undefined;
 

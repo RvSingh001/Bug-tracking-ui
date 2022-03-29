@@ -24,7 +24,7 @@ export class BugService {
         priority: new FormControl('', Validators.required),
         projectId: new FormControl('', Validators.required),
         userId: new FormControl('', Validators.required),
-        createdBy: new FormControl('')
+        createdby: new FormControl('')
     });
 
     getBugs(): Bug[] {
@@ -102,7 +102,7 @@ export class BugService {
                 priority: '',
                 projectId: '',
                 userId: '',
-                createdBy: ''
+                createdby: ''
             }
             );
         }
@@ -117,7 +117,7 @@ export class BugService {
                 priority: bug.priority,
                 projectId: bug.projectId,
                 userId: bug.userId,
-                createdBy: bug.createdBy
+                createdby: ''
             });
         }
     }

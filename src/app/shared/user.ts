@@ -6,5 +6,5 @@ export class User {
     public role!: string;
     public userName!: string;
     public password!: string;
-    public active!: boolean
-}
+    public active!: boolean;
+    }

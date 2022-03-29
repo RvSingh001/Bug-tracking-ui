@@ -13,13 +13,15 @@
             <mat-grid-tile>
                 <div class="controles-container">
                     <mat-form-field>
-                        <input formControlName="firstName"  pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput placeholder="Enter First Name*">
+                        <input formControlName="firstName" pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput
+                            placeholder="Enter First Name*">
                         <mat-error *ngIf="newUserForm.controls.firstName.errors?.['required']">
                             First Name is Required!
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <input formControlName="lastName"  pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput placeholder="Enter Last Name*">
+                        <input formControlName="lastName" pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput
+                            placeholder="Enter Last Name*">
                         <mat-error *ngIf="newUserForm.controls.lastName.errors?.['required']">
                             LastName is Required!
                         </mat-error>
@@ -54,7 +56,8 @@
                         </mat-error>
                     </mat-form-field>
                     <div class="button-row">
-                        <button mat-raised-button color="primary" type="button" [disabled]="newUserForm.invalid" (click)="onSubmitUser()">Submit</button>
+                        <button mat-raised-button color="primary" type="button" [disabled]="newUserForm.invalid"
+                            (click)="onSubmitUser()">Submit</button>
                         <button mat-raised-button color="warn" type="button" (click)="onClearuser()">Clear</button>
                     </div>
                 </div>

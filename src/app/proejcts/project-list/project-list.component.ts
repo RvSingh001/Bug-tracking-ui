@@ -1,34 +1,34 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import { Router } from '@angular/router';
-
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
-
-
 import { ProjectComponent } from '../project/project.component';
 import { Project } from 'src/app/shared/project';
 import { NotificationService } from '../service/notification-service';
 import { HttpService } from '../service/project-service';
 import { AuthServiceService } from 'src/app/auth/auth-service.service';
+import { User } from 'src/app/shared/user';
+import { UserLocalStorage } from 'src/app/shared/UserLocalStorage';
 
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.scss']
 })
+
 export class ProjectListComponent implements OnInit {
 
   projects: MatTableDataSource<any>;
-  displayedColumns: string[] = ['ProjectName', 'Type', 'Status', 'createdAt', 'actions'];
+  displayedColumns: string[] = ['ProjectName', 'Type', 'Status', 'createdAt','project_owner', 'actions'];
   isLoading: boolean = false;
   sortedData: Project[] = [];
   userRole: string | undefined;
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   searchKey: string = '';
   name: string | undefined;
+  user: UserLocalStorage|undefined;
 
   constructor(private projectService: HttpService,
     private dailog: MatDialog,
@@ -39,9 +39,13 @@ export class ProjectListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.user = this.authservice.getUserFromLocalStorage();
     this.userRole = this.authservice.getRoleFromLocalStrorage();
     this.projectService.getAllProjects().subscribe(data => {
+      
+      if(this.authservice.isAdminDiff(this.user?.UserRole || ''))
+      data = data.filter((ele: any) => ele.createby === this.user?.UserId)
+      
       this.projects = new MatTableDataSource(data);
       this.isLoading = true;
       this.projects.paginator = this.paginator;
@@ -66,6 +70,8 @@ export class ProjectListComponent implements OnInit {
           return compare(a.type, b.type, isAsc);
         case 'createdAt':
           return compare(a.createdAt, b.createdAt, isAsc);
+        case 'project_owner':
+          return compare(a.createby, b.createby, isAsc);
         default:
           return 0;
       }

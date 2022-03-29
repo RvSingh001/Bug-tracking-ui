@@ -5,6 +5,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Project } from '../../shared/project';
 import { HttpService } from '../service/project-service';
 import { NotificationService } from '../service/notification-service';
+import { UserLocalStorage } from 'src/app/shared/UserLocalStorage';
+import { AuthServiceService } from 'src/app/auth/auth-service.service';
 
 @Component({
   selector: 'app-project',
@@ -16,15 +18,17 @@ export class ProjectComponent implements OnInit {
   newProjectForm: FormGroup = this.projectService.newProjectForm;
   projectStatus = ['ACTIVE', 'NOT_ACTIVE', 'DEPLOYED', 'CLOSE', 'INPROGRESS'];
   projectTypes = ['Production', 'Social', 'Educational', 'Community', 'Research', 'Others', 'TELECOM'];
-
+  user: UserLocalStorage | undefined;
   constructor(
     private projectService: HttpService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private dailogRef: MatDialogRef<ProjectComponent>) { }
+    private dailogRef: MatDialogRef<ProjectComponent>,
+    private authservice: AuthServiceService) { }
 
   ngOnInit(): void {
+    this.user = this.authservice.getUserFromLocalStorage();
     console.log("Project Component On init")
   }
 
@@ -32,9 +36,15 @@ export class ProjectComponent implements OnInit {
     console.log('In ProjectComponent OnSubmit');
     if (this.newProjectForm.valid) {
       if (!this.newProjectForm.value.projectId) {
+        this.newProjectForm.patchValue({
+          createby: this.authservice.getUserFromLocalStorage().UserId
+        })
         this.createProject(this.newProjectForm.value);
       }
       else {
+        this.newProjectForm.patchValue({
+          createby: this.authservice.getUserFromLocalStorage().UserId
+        })
         this.updateProject(this.newProjectForm.value);
       }
     }

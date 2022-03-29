@@ -12,7 +12,7 @@ import { environment } from "src/environments/environment";
 })
 
 export class UserService {
-      
+
     getAllDevUser() {
         return this.http.get<User[]>(`${environment.baseUrl}users/dev`)
             .pipe(catchError(this.handleError));;
@@ -25,6 +25,7 @@ export class UserService {
         lastName: new FormControl('', Validators.required),
         password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
         email: new FormControl('', [Validators.required, Validators.email]),
+        
     });
 
     getUsers(): User[] {
@@ -94,6 +95,7 @@ export class UserService {
                 lastName: '',
                 email: '',
                 password: '',
+                
             }
             );
         }
@@ -106,7 +108,7 @@ export class UserService {
                 email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName,
-                password: ''
+                password: '',
             });
         }
     }

@@ -52,4 +52,8 @@ export class AuthServiceService {
   isDev(userRole: string) {
     return userRole == 'DEVELOPER';
   }
+
+  isAdminDiff(userRole: string) {
+    return userRole == 'ADMIN'
+  }
 }

@@ -10,6 +10,7 @@ import { UserService } from '../service/userservice';
 import { NotificationService } from 'src/app/proejcts/service/notification-service';
 import { AuthServiceService } from 'src/app/auth/auth-service.service';
 import { Project } from 'src/app/shared/project';
+import { UserLocalStorage } from 'src/app/shared/UserLocalStorage';
 
 @Component({
   selector: 'app-user-list',
@@ -28,6 +29,7 @@ export class UserListComponent implements OnInit {
   isToggleChecked: boolean | undefined;
   userRole: string | undefined;
   name: string | undefined;
+  user: UserLocalStorage|undefined
   admin = "ADMIN";
   superAdmin = "SUPER_ADMIN";
 
@@ -47,6 +49,10 @@ export class UserListComponent implements OnInit {
       this.router.navigateByUrl('');
     }
     this.userService.getAllUsers(this.userRole).subscribe((data) => {
+      if(this.authservice.isAdminDiff(this.user?.UserRole || ''))
+      {
+      data = data.filter((ele: any) => ele.createby === this.user?.UserId)
+      }
       this.users = new MatTableDataSource(data);
       this.isLoading = true;
       this.users.paginator = this.paginator;

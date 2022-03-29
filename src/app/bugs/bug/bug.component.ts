@@ -60,7 +60,7 @@ export class BugComponent implements OnInit {
         console.log(this.newBugForm.value);
         console.log(this.user?.UserEmail)
         this.newBugForm.patchValue({
-          createdBy: this.user?.UserName + " (" + this.user?.UserRole + ")"
+          createdby: this.user?.UserName + " (" + this.user?.UserRole + ")"
         })
         console.log('updated');
         console.log(this.newBugForm.value);
@@ -70,7 +70,7 @@ export class BugComponent implements OnInit {
         console.log('In BugComponent OnSubmit else block');
         console.log(this.newBugForm.value.bugId);
         this.newBugForm.patchValue({
-          createdBy: this.user?.UserName + " (" + this.user?.UserRole + ")"
+          createdby: this.user?.UserName + " (" + this.user?.UserRole + ")"
         })
         this.updateBug(this.newBugForm.value);
       }
@@ -128,7 +128,7 @@ export class BugComponent implements OnInit {
 
   populateBugStatusBasedOnUserRole(userRole: string) {
     console.log(userRole);
-    if (userRole === 'DEVELOPER') {
+    if (userRole == 'DEVELOPER') {
       this.bugStatus = this.devStatus;
     }
     else if (userRole == 'QA') {
