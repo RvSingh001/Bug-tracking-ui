@@ -20,7 +20,7 @@ import { BugService } from '../service/bug.service';
 export class BugListComponent implements OnInit {
 
   bugs: MatTableDataSource<any>;
-  displayedColumns: string[] = ['Title', 'Description', 'Priority', 'Status', 'Creation Time', 'Owner', 'Developer', 'Actions'];
+  displayedColumns: string[] = ['Title', 'Description', 'Priority', 'Status', 'createdAt', 'createdby', 'developer', 'Actions'];
   isLoading: boolean = false;
   sortedData: Bug[] = [];
   projectId: string = '';
@@ -74,11 +74,11 @@ export class BugListComponent implements OnInit {
           return compare(a.status, b.status, isAsc);
         case 'Priority':
           return compare(a.priority, b.priority, isAsc);
-        case 'Creation Time':
+        case 'createdAt':
           return compare(a.createdAt, b.createdAt, isAsc);
-        case 'Owner':
-          return compare(a.createdBy, b.createdBy, isAsc);
-        case 'Developer':
+        case 'createdby':
+          return compare(a.createdby, b.createdby, isAsc);
+        case 'developer':
           return compare(a.developer, b.developer, isAsc);
         default:
           return 0;

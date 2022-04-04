@@ -32,6 +32,8 @@ export class UserListComponent implements OnInit {
   user: UserLocalStorage|undefined
   admin = "ADMIN";
   superAdmin = "SUPER_ADMIN";
+  qa="QA";
+  developer="DEVELOPER";
 
   constructor(
     private userService: UserService,
@@ -49,10 +51,6 @@ export class UserListComponent implements OnInit {
       this.router.navigateByUrl('');
     }
     this.userService.getAllUsers(this.userRole).subscribe((data) => {
-      if(this.authservice.isAdminDiff(this.user?.UserRole || ''))
-      {
-      data = data.filter((ele: any) => ele.createby === this.user?.UserId)
-      }
       this.users = new MatTableDataSource(data);
       this.isLoading = true;
       this.users.paginator = this.paginator;
