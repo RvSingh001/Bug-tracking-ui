@@ -8,6 +8,7 @@ export  class Project {
     public status!: string;
     public createdAt!: Date;
     public lastModified!: Data;
-    public createdby!: string;
     public project_owner!: string;
+    public userId!: string;
+  
 }

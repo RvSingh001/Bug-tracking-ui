@@ -20,7 +20,7 @@ export class HttpService {
         description: new FormControl('', Validators.required),
         status: new FormControl('', Validators.required),
         type: new FormControl('', Validators.required),
-        createby: new FormControl('')
+        userId: new FormControl('')
        
     });
 
@@ -94,7 +94,7 @@ export class HttpService {
                 description: '',
                 type: '',
                 status: '',
-                createby: ''
+                userId: ''
             }
             );
         }
@@ -107,7 +107,7 @@ export class HttpService {
                 description: project.description,
                 status: project.status,
                 type: project.type,
-                createby: ''
+                userId: ''
                 
                 
             });

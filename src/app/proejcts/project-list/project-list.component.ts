@@ -11,6 +11,8 @@ import { HttpService } from '../service/project-service';
 import { AuthServiceService } from 'src/app/auth/auth-service.service';
 import { User } from 'src/app/shared/user';
 import { UserLocalStorage } from 'src/app/shared/UserLocalStorage';
+import { UserService } from 'src/app/Users/service/userservice';
+import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
 
 @Component({
   selector: 'app-project-list',
@@ -29,11 +31,13 @@ export class ProjectListComponent implements OnInit {
   searchKey: string = '';
   name: string | undefined;
   user: UserLocalStorage|undefined;
+  userName :User | undefined;
 
   constructor(private projectService: HttpService,
     private dailog: MatDialog,
     private router: Router,
     private notificationService: NotificationService,
+    private userService: UserService,
     private authservice: AuthServiceService) {
     this.projects = new MatTableDataSource();
   }
@@ -44,8 +48,12 @@ export class ProjectListComponent implements OnInit {
     this.projectService.getAllProjects().subscribe(data => {
       
       if(this.authservice.isAdminDiff(this.user?.UserRole || ''))
-      data = data.filter((ele: any) => ele.createby === this.user?.UserId)
+      {
+      data = data.filter((ele: any) => ele.userId === this.user?.UserId)
+      }
       
+    
+     
       this.projects = new MatTableDataSource(data);
       this.isLoading = true;
       this.projects.paginator = this.paginator;

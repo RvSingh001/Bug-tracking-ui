@@ -37,13 +37,13 @@ export class ProjectComponent implements OnInit {
     if (this.newProjectForm.valid) {
       if (!this.newProjectForm.value.projectId) {
         this.newProjectForm.patchValue({
-          createby: this.authservice.getUserFromLocalStorage().UserId
+          userId: this.authservice.getUserFromLocalStorage().UserId
         })
         this.createProject(this.newProjectForm.value);
       }
       else {
         this.newProjectForm.patchValue({
-          createby: this.authservice.getUserFromLocalStorage().UserId
+          userId: this.authservice.getUserFromLocalStorage().UserId
         })
         this.updateProject(this.newProjectForm.value);
       }
