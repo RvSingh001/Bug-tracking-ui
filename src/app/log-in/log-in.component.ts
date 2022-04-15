@@ -17,8 +17,10 @@ export class LogInComponent implements OnInit {
   loading: boolean = false;
   loginResponse: UserLocalStorage | undefined;
   hide = true;
+  email_clear = '';
+  password_clear = '';
 
-  constructor(private loginService: LoginService, private router: ActivatedRoute, private route: Router, private authService: AuthServiceService, private notificationService: NotificationService) { }
+  constructor(private loginService: LoginService,private router_login: Router, private router: ActivatedRoute, private route: Router, private authService: AuthServiceService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     if (this.authService.getAuthStatus()) {
@@ -26,6 +28,8 @@ export class LogInComponent implements OnInit {
     }
     this.loginService.onDataReceived(false);
   }
+
+
 
   login() {
     this.loading = true;

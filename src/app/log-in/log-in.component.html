@@ -1,22 +1,28 @@
 <div class="login-page" fxLayoutAlign="center start">
   <div fxLayout="column" fxLayoutAlign="center center" class="login-page-dailog">
     <div>
-      <h2 style="color: white;">BUG TRACKING SYSTEM</h2>
+      <h2 style="color: white;">Login</h2>
     </div>
     <form [formGroup]="loginForm">
       <div>
         <mat-form-field appearance="standard" style="width: 70%;">
           <mat-label style="color: white;">User Email</mat-label><br>
-          <input matInput formControlName="email" required style="color: white;">
+          <input matInput formControlName="email" required style="color: white;" [(ngModel)]="email_clear">
+          <button *ngIf="email_clear" style="color: white;" matSuffix mat-icon-button aria-label="Clear" (click)="email_clear=''">
+            <mat-icon>close</mat-icon>
+          </button>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field appearance="standard" style="width: 70%;">
           <mat-label style="color: white;">Password</mat-label><br>
-          <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" required style="color: white;">
+          <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" required style="color: white;" [(ngModel)]="password_clear">
           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hide" style="color: white;">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <button *ngIf="password_clear" style="color: white;" matSuffix mat-icon-button aria-label="Clear" (click)="password_clear=''">
+            <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
         <div *ngIf="loading">

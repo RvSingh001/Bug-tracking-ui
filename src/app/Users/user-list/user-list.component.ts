@@ -50,7 +50,7 @@ export class UserListComponent implements OnInit {
     if (!this.authservice.isAdmin(this.userRole)) {
       this.router.navigateByUrl('');
     }
-    this.userService.getAllUsers(this.userRole).subscribe((data) => {
+    this.userService.getAllUsers().subscribe((data) => {
 
       // if(this.authservice.isAdminDiff(this.userRole || ''))
       // {

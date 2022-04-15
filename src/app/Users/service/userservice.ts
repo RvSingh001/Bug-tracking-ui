@@ -36,8 +36,8 @@ export class UserService {
         console.log('In User Service consturctor');
     }
 
-    getAllUsers(userRole: string): Observable<User[]> {
-        return this.http.get<User[]>(`${environment.baseUrl}users/role/${userRole}`)
+    getAllUsers(): Observable<User[]> {
+        return this.http.get<User[]>(`${environment.baseUrl}users/`)
             .pipe(catchError(this.handleError));;
     }
 
