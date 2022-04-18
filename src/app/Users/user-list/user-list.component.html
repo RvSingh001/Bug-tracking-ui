@@ -49,7 +49,7 @@
         <ng-container matColumnDef="Active">
             <mat-header-cell *matHeaderCellDef mat-sort-header class="bold-font">Active</mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <mat-slide-toggle [disabled]="isAdmin(element.role)" [ngModel]="element.active"
+                <mat-slide-toggle [disabled]="isAdmin(element.role) && isActive(element.active)"  [ngModel]="element.active"
                     (change)="onActive($event,element)"></mat-slide-toggle>
             </mat-cell>
         </ng-container>
@@ -58,11 +58,11 @@
             <mat-header-cell *matHeaderCellDef class="bold-font">Actions</mat-header-cell>
             <mat-cell *matCellDef="let row">
 
-                <button mat-icon-button (click)="onEdit(row)">
+                <button [disabled]="isAdmin(row.role) && isActive(row.active)"  mat-icon-button (click)="onEdit(row)">
                     <mat-icon matTooltip="Edit">launch</mat-icon>
                 </button>
 
-                <button mat-icon-button color="warn" (click)="onDelete(row)">
+                <button [disabled]="isAdmin(row.role) && isActive(row.active)"  mat-icon-button color="warn" (click)="onDelete(row)">
                     <mat-icon matTooltip="Delete">delete_outline</mat-icon>
                 </button>
 

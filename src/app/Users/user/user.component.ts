@@ -18,7 +18,7 @@ export class UserComponent implements OnInit {
 
   newUserForm: FormGroup = this.userService.newUserForm;
   userRole = ['QA', 'DEVELOPER', 'ADMIN'];
-  projectManager = ['QA', 'DEVELOPER'];
+  admin = ['QA', 'DEVELOPER'];
   user: UserLocalStorage | undefined;
 
   constructor(private userService: UserService,
@@ -29,7 +29,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authservice.getUserFromLocalStorage();
-    this.populateUserRole(this.user.UserRole || '{}');
+    // this.populateUserRole(this.user.UserRole || '{}');
     console.log()
   }
 
@@ -47,7 +47,7 @@ export class UserComponent implements OnInit {
   createUser(user: User) {
     console.log(`In UserComponent createuser`);
     this.userService.insertUser(user).subscribe(data => {
-      this.notificationService.success('::Submitted successfully');
+      this.notificationService.success('Submitted successfully');
       this.closeDailoguser();
       this.reload();
     }, error => {
@@ -59,16 +59,16 @@ export class UserComponent implements OnInit {
     console.log(`In UserComponet update user`);
     this.userService.updateUser(user).subscribe(data => {
       this.closeDailoguser();
-      this.notificationService.success('::Modified successfully');
+      this.notificationService.success('Modified successfully');
       this.reload();
     });
   }
 
-  populateUserRole(userRole: string) {
-    if (userRole === 'ADMIN') {
-      this.userRole = this.projectManager;
-    }
-  }
+  // populateUserRole(userRole: string) {
+  //   if (userRole === 'ADMIN') {
+  //     this.userRole = this.admin;
+  //   }
+  // }
 
   onClearuser() {
     console.log("In UserComponent onClear")

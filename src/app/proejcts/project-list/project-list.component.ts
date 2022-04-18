@@ -47,10 +47,10 @@ export class ProjectListComponent implements OnInit {
     this.userRole = this.authservice.getRoleFromLocalStrorage();
     this.projectService.getAllProjects().subscribe(data => {
       
-      if(this.authservice.isAdminDiff(this.user?.UserRole || ''))
-      {
-      data = data.filter((ele: any) => ele.userId === this.user?.UserId)
-      }
+      // if(this.authservice.isAdminDiff(this.user?.UserRole || ''))
+      // {
+      // data = data.filter((ele: any) => ele.userId === this.user?.UserId)
+      // }
       
     
      

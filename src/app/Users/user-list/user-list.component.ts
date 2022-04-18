@@ -119,19 +119,19 @@ export class UserListComponent implements OnInit {
   //Edit Function
   onEdit(param: User) {
 
-    if (param.role == this.superAdmin) {
-      this.notificationService.warn(":: Super admin can not be updated");
-      return;
-    }
+    // if (param.role == this.superAdmin) {
+    //   this.notificationService.warn("Super admin can not be updated");
+    //   return;
+    // }
 
-    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail) {
+    // if (param.email == this.authservice.getUserFromLocalStorage().UserEmail) {
 
-      this.notificationService.warn(":: Please contact super admin for updation");
-      return;
-    }
+    //   this.notificationService.warn("Please contact super admin for updation");
+    //   return;
+    // }
 
-    if (param.role != this.admin || this.userRole == this.superAdmin) {
-      
+    // if (param.role != this.admin || this.userRole == this.superAdmin) {
+      // if (param.role != this.admin) {
       this.userService.getUserById(param.userId).subscribe((data) => {
         this.userService.initializeFormGroupUser(data);
         const dialogConfig = new MatDialogConfig();
@@ -143,60 +143,62 @@ export class UserListComponent implements OnInit {
       });
       this.reload()
       return;
-    }
-    else {
-      this.notificationService.warn(":: Can not edit other admin details")
-      return;
-    }
+    // }
+    // else {
+    //   this.notificationService.warn("Can not edit other admin details")
+    //   return;
+    // }
   }
 
   // #Delete function
   onDelete(param: User) {
 
-    if (param.role == this.superAdmin) {
-      this.notificationService.warn(":: Super admin can not be deleted");
-      return;
-    }
+    // if (param.role == this.superAdmin) {
+    //   this.notificationService.warn("Super admin can not be deleted");
+    //   return;
+    // }
 
-    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail) {
-      this.notificationService.warn(":: Please contact super admin for account deletion");
-      return;
+    // if (param.email == this.authservice.getUserFromLocalStorage().UserEmail) {
+    //   this.notificationService.warn("Please contact super admin for account deletion");
+    //   return;
 
-    }
-    if (param.role != this.admin || this.userRole == this.superAdmin) {
+    // }
+    // if (param.role != this.admin || this.userRole == this.superAdmin) {
+      
       if (confirm('Are you sure want to delete this user?')) {
         this.userService.deleteUser(param.userId).subscribe((response) => {
           if (response.operationStatus === 'SUCCESS') {
-            this.notificationService.success('::Deleted sucessfully');
+            this.notificationService.success('Deleted sucessfully');
             this.reload();
-          } else {
-            this.notificationService.warn('::Unable to delete');
+           } 
+          else {
+            this.notificationService.warn('Unable to delete');
             return;
           }
         });
-      }
+   //   }
     }
-    else {
-      this.notificationService.warn(":: Can not delete other admin")
-      return;
-    }
+    // else {
+    //   this.notificationService.warn("Can not delete other admin")
+    //   return;
+    // }
   }
 
   //Active Function
   onActive(event: any, param: User) {
 
-    if (param.role == this.superAdmin) {
-      this.notificationService.warn(":: Super admin can not be deactivated");
-      this.reload();
-      return;
-    }
+    // if (param.role == this.superAdmin) {
+    //   this.notificationService.warn("Super admin can not be deactivated");
+    //   this.reload();
+    //   return;
+    // }
 
-    if (param.email == this.authservice.getUserFromLocalStorage().UserEmail) {
-      this.notificationService.warn(":: Please contact super admin for account deactivation");
-      this.reload();
-      return;
-    }
-    if (param.role != this.admin || this.userRole == this.superAdmin) {
+    // if (param.email == this.authservice.getUserFromLocalStorage().UserEmail) {
+    //   this.notificationService.warn("Please contact super admin for account deactivation");
+    //   this.reload();
+    //   return;
+    // }
+    // if (param.role != this.admin || this.userRole == this.superAdmin) {
       let value = param.active;
       let dailogMgs = 'Are you sure want to active this user?';
       if (value) {
@@ -205,10 +207,10 @@ export class UserListComponent implements OnInit {
       if (confirm(dailogMgs)) {
         this.userService.activetedUser(param.userId).subscribe((response) => {
           if (response.operationStatus === 'SUCCESS') {
-            this.notificationService.success('::Operation succeed');
+            this.notificationService.success('Operation succeed');
             this.reload();
           } else {
-            this.notificationService.warn(':: Operation failed');
+            this.notificationService.warn('Operation failed');
             this.reload();
             return;
           }
@@ -216,12 +218,12 @@ export class UserListComponent implements OnInit {
       } else {
         event.source.checked = value;
       }
-    }
-    else {
-      this.notificationService.warn(":: Can not deactivated other admin")
-      this.reload();
-      return;
-    }
+    // }
+    // else {
+    //   this.notificationService.warn(":: Can not deactivated other admin")
+    //   this.reload();
+    //   return;
+    // }
 
   }
 
@@ -232,10 +234,18 @@ export class UserListComponent implements OnInit {
   }
 
   isAdmin(userRole: string): boolean {
-    //return this.authservice.isAdmin(userRole || '{}');
-    return false
+    return this.authservice.isAdmin(userRole || '{}');
+    //return false
   }
+
+  isActive(userActive : boolean):boolean
+{
+  return  userActive==true;
 }
+}
+
+
+
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
