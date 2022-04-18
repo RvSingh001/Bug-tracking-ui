@@ -7,7 +7,7 @@
 </div>
 <div class="search-div">
     <button *ngIf="isAdmin()" mat-raised-button (click)="onCreate()">
-        <mat-icon>add</mat-icon>Create
+        <mat-icon>add</mat-icon>Create Project
     </button>
     <mat-form-field class="search-form-field" floatLabel="never">
         <input matInput [(ngModel)]="searchKey" placeholder="Search project" autocomplete="off" (keyup)="applyFilter()">

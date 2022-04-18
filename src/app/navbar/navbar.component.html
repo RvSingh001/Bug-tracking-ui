@@ -1,10 +1,16 @@
 <p>
-    <mat-toolbar color="primary" style="margin: auto; padding: auto;  " class="title-toolbar">
+    <mat-toolbar color="primary" style="margin: auto; padding: auto;" class="title-toolbar">
         <span [routerLink]="'/projects'" style="cursor: pointer;">Bug Tracking System</span>
         <span class="fill-remaining-space"></span>
         <div *ngIf="isLoggedIn">
             <!-- <button mat-raised-button color="warn" (click)="logout()">Logout</button> -->
             <button mat-raised-button color="warn" matTooltip="Tap here to logout" (click)="logout()">Logout</button>
+
+        </div>
+        <div *ngIf="!isLoggedIn">
+            <!-- <button mat-raised-button color="warn" (click)="logout()">Logout</button> -->
+            <h2 style="color: white;">Login</h2>
+            
         </div>
     </mat-toolbar>
 </p>

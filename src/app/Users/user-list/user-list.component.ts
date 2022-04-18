@@ -110,7 +110,7 @@ export class UserListComponent implements OnInit {
     this.userService.initializeFormGroupUser();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
+    dialogConfig.width = '50%';
     dialogConfig.disableClose = true;
     dialogConfig.backdropClass = 'bdrop';
     this.dailog.open(UserComponent, dialogConfig);
@@ -136,7 +136,7 @@ export class UserListComponent implements OnInit {
         this.userService.initializeFormGroupUser(data);
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
-        dialogConfig.width = '60%';
+        dialogConfig.width = '50%';
         dialogConfig.disableClose = true;
         dialogConfig.backdropClass = 'bdrop';
         this.dailog.open(UserComponent, dialogConfig);

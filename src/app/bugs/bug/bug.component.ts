@@ -21,7 +21,8 @@ import { BugService } from '../service/bug.service';
 export class BugComponent implements OnInit {
   newBugForm: FormGroup = this.bugService.newBugForm;
   bugStatus = ['NOT_AN_ISSUE', 'IN_PROGRESS', 'FIX', 'OPEN', 'CLOSE'];
-  qaBugStatus = ['OPEN', 'CLOSE'];
+  qaBugStatus = ['OPEN'];
+  qaBugStatusModify=['OPEN','REOPEN','CLOSE'];
   devStatus = ['NOT_AN_ISSUE', 'IN_PROGRESS', 'FIX'];
   bugPriority = ['LOW', 'MEDIUM', 'HIGH'];
   project: Project = new Project();
@@ -41,12 +42,17 @@ export class BugComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authservice.getUserFromLocalStorage();
+
+    if(this.newBugForm.value.bugId)
+    {
+      this.qaBugStatus=this.qaBugStatusModify;
+    }
+
     this.populateBugStatusBasedOnUserRole(this.user.UserRole || '{}');
     this.userService.getAllDevUser().subscribe(data => {
       console.log(data);
       this.devUsers = data;
     });
-
     this.projectService.getProjectById(this.newBugForm.value.projectId).subscribe(data => {
       this.project = data;
     })
@@ -86,7 +92,7 @@ export class BugComponent implements OnInit {
   }
 
   updateBug(bug: Bug) {
-
+    
     console.log(`In BugComponent update bug`);
     this.bugService.updateBug(bug).subscribe(data => {
       this.closeDailog();
@@ -95,13 +101,7 @@ export class BugComponent implements OnInit {
     });
   }
 
-  onClear() {
-    console.log("In BugComponent onClear")
-    let defaultBugValue = new Bug();
-    defaultBugValue.bugId = this.newBugForm.value.bugId;
-    defaultBugValue.projectId = this.newBugForm.value.projectId;
-    this.bugService.populatePartialForm(defaultBugValue);
-  }
+  
 
   closeDailog() {
     this.bugService.newBugForm.reset;

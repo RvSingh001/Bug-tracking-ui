@@ -107,7 +107,7 @@ export class BugListComponent implements OnInit {
     console.log(this.bugService.newBugForm.value);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
+    dialogConfig.width = '50%';
     dialogConfig.disableClose = true;
     dialogConfig.backdropClass = "bdrop";
     this.dailog.open(BugComponent, dialogConfig);
@@ -122,7 +122,7 @@ export class BugListComponent implements OnInit {
       console.log(this.bugService.newBugForm.value);
       const dialogConfig = new MatDialogConfig();
       dialogConfig.autoFocus = true;
-      dialogConfig.width = '60%';
+      dialogConfig.width = '50%';
       dialogConfig.disableClose = true;
       dialogConfig.backdropClass = "bdrop";
       this.dailog.open(BugComponent, dialogConfig);

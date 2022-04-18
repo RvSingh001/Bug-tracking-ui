@@ -14,14 +14,14 @@
                 <div class="controles-container">
                     <mat-form-field>
                         <input formControlName="projectName" pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput placeholder=" Title of
-                            Project*">
+                            Project*" maxlength="50">
                         <mat-error *ngIf="newProjectForm.controls.projectName.errors?.['required']">
                             Title is Required!
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
                         <input formControlName="description" pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput
-                            placeholder="Description of Project*">
+                            placeholder="Description of Project*" maxlength="200">
                         <mat-error *ngIf="newProjectForm.controls.description.errors?.['required']">
                             Description is Required!
                         </mat-error>
