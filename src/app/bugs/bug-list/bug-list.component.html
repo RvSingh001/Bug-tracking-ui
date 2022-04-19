@@ -7,7 +7,7 @@
 </div>
 <div class="search-div">
     <button *ngIf="!isDeveloper()" mat-raised-button (click)="onCreate()">
-        <mat-icon>add</mat-icon>Create Bug
+        <mat-icon>add</mat-icon>Add bug
     </button>
     <mat-form-field class="search-form-field" floatLabel="never">
         <input matInput [(ngModel)]="searchKey" placeholder="Search bug" autocomplete="on" (keyup)="applyFilter()">

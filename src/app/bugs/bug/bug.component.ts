@@ -85,7 +85,7 @@ export class BugComponent implements OnInit {
 
   createBug(bug: Bug) {
     this.bugService.insertBug(bug).subscribe(data => {
-      this.notificationService.success('::Submitted successfully');
+      this.notificationService.success('Submitted successfully');
       this.closeDailog();
       this.reload();
     });
@@ -96,7 +96,7 @@ export class BugComponent implements OnInit {
     console.log(`In BugComponent update bug`);
     this.bugService.updateBug(bug).subscribe(data => {
       this.closeDailog();
-      this.notificationService.success('::Modified successfully');
+      this.notificationService.success('Modified successfully');
       this.reload();
     });
   }

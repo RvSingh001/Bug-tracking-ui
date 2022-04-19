@@ -36,15 +36,9 @@ export class ProjectComponent implements OnInit {
     console.log('In ProjectComponent OnSubmit');
     if (this.newProjectForm.valid) {
       if (!this.newProjectForm.value.projectId) {
-        this.newProjectForm.patchValue({
-          userId: this.authservice.getUserFromLocalStorage().UserId
-        })
         this.createProject(this.newProjectForm.value);
       }
       else {
-        this.newProjectForm.patchValue({
-          userId: this.authservice.getUserFromLocalStorage().UserId
-        })
         this.updateProject(this.newProjectForm.value);
       }
     }
@@ -52,7 +46,7 @@ export class ProjectComponent implements OnInit {
 
   createProject(project: Project) {
     this.projectService.insertProject(project).subscribe(data => {
-      this.notificationService.success('::Submitted successfully');
+      this.notificationService.success('Submitted successfully');
       this.closeDailog();
       this.reload();
     });
@@ -62,7 +56,7 @@ export class ProjectComponent implements OnInit {
     console.log(`In ProjectComponent update project`);
     this.projectService.updateProject(project).subscribe(data => {
       this.closeDailog();
-      this.notificationService.success('::Modified successfully');
+      this.notificationService.success('Modified successfully');
       this.reload();
     });
   }

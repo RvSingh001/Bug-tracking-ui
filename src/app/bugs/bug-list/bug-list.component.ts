@@ -70,6 +70,8 @@ export class BugListComponent implements OnInit {
       switch (sort.active) {
         case 'Title':
           return compare(a.title, b.title, isAsc);
+        case 'Description':
+          return compare(a.Description, b.Description, isAsc);
         case 'Status':
           return compare(a.status, b.status, isAsc);
         case 'Priority':
@@ -138,11 +140,11 @@ export class BugListComponent implements OnInit {
     if (confirm('Are you sure want to delete this bug?')) {
       this.bugService.deleteBug(param.bugId).subscribe(response => {
         if (response.operationStatus === 'SUCCESS') {
-          this.notificationService.success('::Deleted sucessfully');
+          this.notificationService.success('Deleted sucessfully');
           this.reload();
         }
         else {
-          this.notificationService.warn('::Unable to delete');
+          this.notificationService.warn('Unable to delete');
           this.reload();
         }
       })

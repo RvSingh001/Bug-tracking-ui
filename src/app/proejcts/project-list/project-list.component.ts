@@ -23,7 +23,7 @@ import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_c
 export class ProjectListComponent implements OnInit {
 
   projects: MatTableDataSource<any>;
-  displayedColumns: string[] = ['ProjectName', 'Type', 'Status', 'createdAt','project_owner', 'actions'];
+  displayedColumns: string[] = ['ProjectName', 'Type', 'Status', 'createdAt', 'actions'];
   isLoading: boolean = false;
   sortedData: Project[] = [];
   userRole: string | undefined;
@@ -46,14 +46,6 @@ export class ProjectListComponent implements OnInit {
     this.user = this.authservice.getUserFromLocalStorage();
     this.userRole = this.authservice.getRoleFromLocalStrorage();
     this.projectService.getAllProjects().subscribe(data => {
-      
-      // if(this.authservice.isAdminDiff(this.user?.UserRole || ''))
-      // {
-      // data = data.filter((ele: any) => ele.userId === this.user?.UserId)
-      // }
-      
-    
-     
       this.projects = new MatTableDataSource(data);
       this.isLoading = true;
       this.projects.paginator = this.paginator;
@@ -103,7 +95,7 @@ export class ProjectListComponent implements OnInit {
     this.projectService.initializeFormGroup();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
+    dialogConfig.width = '50%';
     dialogConfig.disableClose = true;
     dialogConfig.backdropClass = "bdrop";
     this.dailog.open(ProjectComponent, dialogConfig);
@@ -118,7 +110,7 @@ export class ProjectListComponent implements OnInit {
       console.log(this.projectService.newProjectForm.value);
       const dialogConfig = new MatDialogConfig();
       dialogConfig.autoFocus = true;
-      dialogConfig.width = '60%';
+      dialogConfig.width = '50%';
       dialogConfig.disableClose = true;
       dialogConfig.backdropClass = "bdrop";
       this.dailog.open(ProjectComponent, dialogConfig);
@@ -131,11 +123,11 @@ export class ProjectListComponent implements OnInit {
     if (confirm('Are you sure want to delete this project?')) {
       this.projectService.deleteProject(param.projectId).subscribe(response => {
         if (response.operationStatus === 'SUCCESS') {
-          this.notificationService.success('::Deleted sucessfully');
+          this.notificationService.success('Deleted sucessfully');
           this.reload();
         }
         else {
-          this.notificationService.warn('::Unable to delete');
+          this.notificationService.warn('Unable to delete');
           this.reload();
         }
       })
