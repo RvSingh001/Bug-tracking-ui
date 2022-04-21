@@ -7,7 +7,7 @@
           <input matInput formControlName="email" required style="color: white;" [(ngModel)]="email_clear">
         
           <mat-error *ngIf="loginForm.controls.email.errors?.['required']" style="color: white;">
-            Email is Required!
+            Email is Required
         </mat-error>
         </mat-form-field>
       </div>
@@ -15,20 +15,15 @@
         <mat-form-field appearance="standard" style="width: 70%;">
           <mat-label style="color: white;">Password</mat-label><br>
           <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" required style="color: white;" [(ngModel)]="password_clear">
-          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide" style="color: white;">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
         
           <mat-error *ngIf="loginForm.controls.password.errors?.['required']" style="color: white;">
-            Password is Required!
+            Password is Required
         </mat-error>
         </mat-form-field>
       
       </div>
       <button mat-stroked-button style="color: white; margin-right: 5px; margin-top: 5px; background-color: orange;" class="buttonpadding"
-        (click)=login()>Log
-        in</button>
+        (click)=login() type="submit" (key.enter)="login()" >Login</button>
 
         <button mat-stroked-button style="color: white; margin-top: 5px; background-color: green;" class="buttonpadding" 
          (click)="email_clear=''" (click)="password_clear=''">Clear</button>
