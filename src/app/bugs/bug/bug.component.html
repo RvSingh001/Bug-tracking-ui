@@ -21,7 +21,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <input [disabled]="isDeveloper()" formControlName="description"
+                        <input formControlName="description"
                             pattern="[a-zA-Z0-9][a-zA-Z0-9 ]+" matInput placeholder="Description of Bug*" maxlength="200">
                         <mat-error *ngIf="newBugForm.controls.description.errors?.['required']">
                             Description is Required!
